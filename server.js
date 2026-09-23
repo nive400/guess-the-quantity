@@ -46,6 +46,13 @@ function getRankedLeaderboard() {
   }));
 }
 
+const ADMIN_KEY = process.env.ADMIN_KEY || 'admin123';
+
+function checkAdminAuth(req) {
+  const key = req.headers['x-admin-key'] || req.query.key || (req.body && req.body.key);
+  return key === ADMIN_KEY;
+}
+
 // REST API Endpoints
 app.get('/api/health', (req, res) => {
   res.json({
@@ -65,10 +72,23 @@ app.get('/api/reverse-detective', (req, res) => {
   res.json(reverseDetective);
 });
 
+// Admin-Only Leaderboard View
 app.get('/api/leaderboard', (req, res) => {
+  if (!checkAdminAuth(req)) {
+    return res.status(403).json({ error: 'Admin access required to view the leaderboard' });
+  }
   res.json(getRankedLeaderboard());
 });
 
+// Admin-Only Verification Endpoint
+app.post('/api/admin-verify', (req, res) => {
+  if (checkAdminAuth(req)) {
+    return res.json({ valid: true });
+  }
+  res.status(403).json({ valid: false, error: 'Invalid admin passcode' });
+});
+
+// Participant Score Submission (open to all, does not leak full leaderboard)
 app.post('/api/score', (req, res) => {
   const { name, score, totalTimeSec, playerId } = req.body;
   if (!name || score === undefined) {
@@ -98,14 +118,19 @@ app.post('/api/score', (req, res) => {
   }
 
   const ranked = getRankedLeaderboard();
-  io.emit('leaderboard_update', ranked);
+  // Broadcast update ONLY to admin room sockets
+  io.to('admin_room').emit('leaderboard_update', ranked);
 
-  res.json({ success: true, rank: ranked.find(p => p.id === id)?.rank || 1, leaderboard: ranked });
+  res.json({ success: true, rank: ranked.find(p => p.id === id)?.rank || 1 });
 });
 
+// Admin-Only Reset
 app.post('/api/reset-leaderboard', (req, res) => {
+  if (!checkAdminAuth(req)) {
+    return res.status(403).json({ error: 'Admin access required to reset leaderboard' });
+  }
   leaderboard = [];
-  io.emit('leaderboard_update', []);
+  io.to('admin_room').emit('leaderboard_update', []);
   res.json({ success: true, message: 'Leaderboard reset successfully' });
 });
 
@@ -119,15 +144,19 @@ io.on('connection', (socket) => {
   activeConnections++;
   io.emit('active_players_count', activeConnections);
 
-  // Send current leaderboard immediately upon connecting
-  socket.emit('leaderboard_update', getRankedLeaderboard());
-
-  // Player registers or announces presence
-  socket.on('player_join', (data) => {
-    socket.emit('leaderboard_update', getRankedLeaderboard());
+  // Admin joins the admin room using the passcode
+  socket.on('admin_join', (data) => {
+    const key = typeof data === 'string' ? data : (data && data.key);
+    if (key === ADMIN_KEY) {
+      socket.join('admin_room');
+      socket.emit('admin_auth_success', { valid: true });
+      socket.emit('leaderboard_update', getRankedLeaderboard());
+    } else {
+      socket.emit('admin_auth_success', { valid: false, error: 'Invalid passcode' });
+    }
   });
 
-  // Player completes round 10 and submits final score
+  // Player completes quiz and submits final score
   socket.on('submit_score', (data) => {
     const { name, score, totalTimeSec, playerId } = data;
     if (!name || score === undefined) return;
@@ -154,8 +183,8 @@ io.on('connection', (socket) => {
     }
 
     const ranked = getRankedLeaderboard();
-    // Broadcast live to all connected players immediately
-    io.emit('leaderboard_update', ranked);
+    // Broadcast live ONLY to admin sockets!
+    io.to('admin_room').emit('leaderboard_update', ranked);
     socket.emit('score_acknowledged', { success: true, rank: ranked.find(p => p.id === id)?.rank || 1 });
   });
 

@@ -15,11 +15,14 @@
         <h1 class="text-xl font-bold text-amber-400">⚡ Guess the Quantity</h1>
         <p class="text-xs text-slate-400">SI Unit Trivia · 15 Questions · 15-Min Timer</p>
       </div>
-      <div class="flex gap-1 text-xs font-semibold bg-slate-900 p-1 rounded-lg border border-slate-800">
+      <div class="flex items-center gap-1 text-xs font-semibold bg-slate-900 p-1 rounded-lg border border-slate-800">
         <button id="btn-tab-play" onclick="switchTab('play')" class="px-3 py-1 rounded bg-amber-500 text-slate-950 font-bold">Play</button>
-        <button id="btn-tab-lead" onclick="switchTab('lead')" class="px-3 py-1 rounded text-slate-300 hover:text-white">Leaderboard</button>
         <button id="btn-tab-rules" onclick="switchTab('rules')" class="px-3 py-1 rounded text-slate-300 hover:text-white">Rules</button>
-        <button id="btn-tab-bonus" onclick="switchTab('bonus')" class="px-3 py-1 rounded text-slate-300 hover:text-white">Reverse Detective</button>
+        <button id="btn-tab-lead" onclick="switchTab('lead')" class="hidden px-3 py-1 rounded text-slate-300 hover:text-white">🏆 Leaderboard</button>
+        <button id="btn-tab-bonus" onclick="switchTab('bonus')" class="hidden px-3 py-1 rounded text-slate-300 hover:text-white">🕵️ Reverse Detective</button>
+        <button id="btn-admin-auth" onclick="toggleAdminModal()" class="px-2 py-1 rounded text-slate-400 hover:text-amber-400 border border-slate-800 hover:border-amber-500/40 text-[11px] font-mono flex items-center gap-1">
+          <span id="lbl-admin-icon">🔒</span> <span id="lbl-admin-text">Admin</span>
+        </button>
       </div>
     </header>
 
@@ -104,6 +107,9 @@
       <div id="box-summary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
         <div class="text-4xl">🏆</div>
         <h2 id="sum-title" class="text-xl font-bold text-white">Quiz Completed!</h2>
+        <div class="bg-emerald-500/10 border border-emerald-500/20 py-2 px-3 rounded-lg max-w-sm mx-auto text-xs text-emerald-400">
+          ✅ Your score has been submitted to the event host!
+        </div>
         <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto text-xs">
           <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <span class="block text-slate-400">Score</span>
@@ -119,16 +125,44 @@
           </div>
         </div>
         <div class="flex justify-center gap-2 pt-2">
-          <button onclick="switchTab('lead')" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs">View Leaderboard →</button>
-          <button onclick="restartQuiz()" class="border border-slate-700 text-slate-300 px-4 py-2 rounded-lg text-xs">Play Again</button>
+          <button id="btn-admin-lead-link" onclick="switchTab('lead')" class="hidden bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-xs hover:bg-amber-400">
+            View Live Leaderboard (Admin) →
+          </button>
+          <button onclick="restartQuiz()" class="border border-slate-700 hover:border-slate-500 text-slate-300 px-4 py-2 rounded-lg text-xs">
+            Play Again
+          </button>
         </div>
       </div>
 
     </main>
 
-    <!-- TAB 2: LEADERBOARD -->
-    <section id="pane-lead" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3">
-      <h2 class="text-lg font-bold text-white">Live Leaderboard</h2>
+    <!-- TAB 2: LEADERBOARD (ADMIN ONLY) -->
+    <section id="pane-lead" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 class="text-lg font-bold text-white">👑 Live Leaderboard</h2>
+            <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Admin View</span>
+          </div>
+          <p class="text-xs text-slate-400">Real-time standings of all event participants.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="fetchAdminLeaderboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1">
+            🔄 Refresh
+          </button>
+          <button onclick="resetLeaderboardConfirm()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1">
+            🗑️ Clear Scores
+          </button>
+          <button onclick="adminLogout()" class="border border-slate-700 text-slate-400 hover:text-white text-xs px-2.5 py-1.5 rounded-lg">
+            🔒 Lock
+          </button>
+        </div>
+      </div>
+
+      <!-- Top 3 Podium Highlights -->
+      <div id="lead-podium" class="grid grid-cols-3 gap-2 text-center"></div>
+
+      <!-- Full Standings Table -->
       <div class="overflow-x-auto border border-slate-800 rounded-lg">
         <table class="w-full text-xs text-left">
           <thead class="bg-slate-950 text-slate-400 uppercase">
@@ -137,9 +171,14 @@
               <th class="p-2.5">Player / Team</th>
               <th class="p-2.5 text-right">Score</th>
               <th class="p-2.5 text-center">Time</th>
+              <th class="p-2.5 text-right">Completed</th>
             </tr>
           </thead>
-          <tbody id="lead-rows" class="divide-y divide-slate-800"></tbody>
+          <tbody id="lead-rows" class="divide-y divide-slate-800">
+            <tr>
+              <td colspan="5" class="p-4 text-center text-slate-500">No participants yet. Scores will appear here once players submit!</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </section>
@@ -157,9 +196,12 @@
       </ul>
     </section>
 
-    <!-- TAB 4: REVERSE DETECTIVE -->
+    <!-- TAB 4: REVERSE DETECTIVE (HOST TOOL) -->
     <section id="pane-bonus" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3 text-xs">
-      <h2 class="text-lg font-bold text-white">Bonus Round: Reverse Detective</h2>
+      <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+        <h2 class="text-lg font-bold text-white">Bonus Round: Reverse Detective</h2>
+        <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Host Tool</span>
+      </div>
       <div class="bg-slate-950 border border-dashed border-amber-500/40 p-3 rounded-lg text-center">
         <span class="text-slate-400">Target Unit:</span>
         <div class="text-2xl font-bold font-mono text-amber-400">Volt (V)</div>
@@ -183,6 +225,23 @@
         <button onclick="awardBonus()" class="bg-emerald-600 text-white font-bold px-3 py-1.5 rounded text-xs">Award to Player</button>
       </div>
     </section>
+
+    <!-- Admin Authentication Modal -->
+    <div id="modal-admin" class="hidden fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
+      <div class="bg-slate-900 border border-slate-700 rounded-xl p-5 max-w-xs w-full space-y-3 text-center">
+        <div class="text-3xl">🔐</div>
+        <h3 class="text-base font-bold text-white">Admin Authentication</h3>
+        <p class="text-xs text-slate-400">Enter host passcode to unlock the live leaderboard and scoring tools.</p>
+        <form onsubmit="handleAdminLogin(event)" class="space-y-3 pt-1">
+          <input id="in-admin-pass" type="password" placeholder="Passcode (default: admin123)" required class="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded-lg px-3 py-2 text-sm text-center text-white outline-none">
+          <div id="admin-error" class="text-xs text-rose-400 font-semibold hidden">Incorrect passcode!</div>
+          <div class="flex gap-2">
+            <button type="button" onclick="closeAdminModal()" class="flex-1 border border-slate-700 text-slate-400 py-1.5 rounded-lg text-xs hover:text-white">Cancel</button>
+            <button type="submit" class="flex-1 bg-amber-500 text-slate-950 font-bold py-1.5 rounded-lg text-xs hover:bg-amber-400">Unlock</button>
+          </div>
+        </form>
+      </div>
+    </div>
 
   </div>
 
@@ -395,23 +454,33 @@
     let playerName = "Player";
     let timerInterval = null;
     let timeLeftSeconds = 15 * 60; // 15 minutes = 900 seconds
-    let leaderboard = [
-      { name: "QuantumLeap", score: 1275, time: 640 },
-      { name: "Sarah M.", score: 1150, time: 590 },
-      { name: "Alex R.", score: 950, time: 710 }
-    ];
+
+    // Admin authentication state
+    let adminKey = sessionStorage.getItem('gq_admin_key') || null;
+    let isAdmin = false;
+    let leaderboard = [];
 
     function switchTab(t) {
+      if ((t === 'lead' || t === 'bonus') && !isAdmin) {
+        toggleAdminModal();
+        return;
+      }
+
       ['play', 'lead', 'rules', 'bonus'].forEach(id => {
-        document.getElementById(`pane-${id}`).classList.toggle('hidden', id !== t);
+        const pane = document.getElementById(`pane-${id}`);
+        if (pane) pane.classList.toggle('hidden', id !== t);
+
         const btn = document.getElementById(`btn-tab-${id}`);
-        if (id === t) {
-          btn.className = "px-3 py-1 rounded bg-amber-500 text-slate-950 font-bold";
-        } else {
-          btn.className = "px-3 py-1 rounded text-slate-300 hover:text-white";
+        if (btn) {
+          if (id === t) {
+            btn.className = "px-3 py-1 rounded bg-amber-500 text-slate-950 font-bold";
+          } else {
+            btn.className = "px-3 py-1 rounded text-slate-300 hover:text-white";
+          }
         }
       });
-      if (t === 'lead') renderLeaderboard();
+
+      if (t === 'lead' && isAdmin) fetchAdminLeaderboard();
       if (t === 'play' && !document.getElementById('box-game').classList.contains('hidden')) {
         document.getElementById('in-guess').focus();
       }
@@ -600,14 +669,13 @@
       document.getElementById('sum-correct').textContent = `${correctCount}/15`;
       document.getElementById('sum-time').textContent = `${timeSec}s (${formatTime(timeSec)})`;
 
-      leaderboard.push({ name: playerName, score, time: timeSec });
-      leaderboard.sort((a, b) => b.score !== a.score ? b.score - a.score : a.time - b.time);
-
       fetch('/api/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: playerName, score, totalTimeSec: timeSec })
       }).catch(() => {});
+
+      if (isAdmin) fetchAdminLeaderboard();
     }
 
     function restartQuiz() {
@@ -621,19 +689,199 @@
       loadRound(0);
     }
 
+    // --- ADMIN AUTHENTICATION & MANAGEMENT ---
+    function checkAdminStatus() {
+      const params = new URLSearchParams(window.location.search);
+      const paramKey = params.get('admin');
+      if (paramKey) {
+        verifyAndSetAdmin(paramKey);
+        return;
+      }
+      if (adminKey) {
+        verifyAndSetAdmin(adminKey);
+      }
+    }
+
+    function verifyAndSetAdmin(key) {
+      fetch('/api/admin-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key })
+      })
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Unauthorized');
+      })
+      .then(data => {
+        if (data.valid) setAdminLoggedIn(key);
+      })
+      .catch(() => {
+        // Fallback for standalone file preview
+        if (key === 'admin123') setAdminLoggedIn(key);
+      });
+    }
+
+    function setAdminLoggedIn(key) {
+      adminKey = key;
+      isAdmin = true;
+      sessionStorage.setItem('gq_admin_key', key);
+
+      document.getElementById('btn-tab-lead').classList.remove('hidden');
+      document.getElementById('btn-tab-bonus').classList.remove('hidden');
+      const leadLink = document.getElementById('btn-admin-lead-link');
+      if (leadLink) leadLink.classList.remove('hidden');
+
+      document.getElementById('lbl-admin-icon').textContent = '👑';
+      document.getElementById('lbl-admin-text').textContent = 'Admin Mode';
+      document.getElementById('btn-admin-auth').className = "px-2 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono flex items-center gap-1";
+
+      fetchAdminLeaderboard();
+    }
+
+    function adminLogout() {
+      adminKey = null;
+      isAdmin = false;
+      sessionStorage.removeItem('gq_admin_key');
+
+      document.getElementById('btn-tab-lead').classList.add('hidden');
+      document.getElementById('btn-tab-bonus').classList.add('hidden');
+      const leadLink = document.getElementById('btn-admin-lead-link');
+      if (leadLink) leadLink.classList.add('hidden');
+
+      document.getElementById('lbl-admin-icon').textContent = '🔒';
+      document.getElementById('lbl-admin-text').textContent = 'Admin';
+      document.getElementById('btn-admin-auth').className = "px-2 py-1 rounded text-slate-400 hover:text-amber-400 border border-slate-800 text-[11px] font-mono flex items-center gap-1";
+
+      switchTab('play');
+    }
+
+    function toggleAdminModal() {
+      if (isAdmin) {
+        if (confirm('You are currently logged in as Admin. Do you want to log out and lock the leaderboard?')) {
+          adminLogout();
+        }
+      } else {
+        document.getElementById('modal-admin').classList.remove('hidden');
+        document.getElementById('admin-error').classList.add('hidden');
+        document.getElementById('in-admin-pass').value = '';
+        setTimeout(() => document.getElementById('in-admin-pass').focus(), 50);
+      }
+    }
+
+    function closeAdminModal() {
+      document.getElementById('modal-admin').classList.add('hidden');
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('in-admin-pass').value.trim();
+      fetch('/api/admin-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: pass })
+      })
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Unauthorized');
+      })
+      .then(data => {
+        if (data.valid) {
+          closeAdminModal();
+          setAdminLoggedIn(pass);
+          switchTab('lead');
+        } else {
+          document.getElementById('admin-error').classList.remove('hidden');
+        }
+      })
+      .catch(() => {
+        if (pass === 'admin123') {
+          closeAdminModal();
+          setAdminLoggedIn(pass);
+          switchTab('lead');
+        } else {
+          document.getElementById('admin-error').classList.remove('hidden');
+        }
+      });
+    }
+
+    function fetchAdminLeaderboard() {
+      if (!isAdmin) return;
+      fetch('/api/leaderboard', {
+        headers: { 'x-admin-key': adminKey || '' }
+      })
+      .then(res => {
+        if (!res.ok) throw new Error('Unauthorized');
+        return res.json();
+      })
+      .then(data => {
+        leaderboard = data;
+        renderLeaderboard();
+      })
+      .catch(() => {
+        renderLeaderboard();
+      });
+    }
+
+    function resetLeaderboardConfirm() {
+      if (!confirm('⚠️ Are you sure you want to clear and reset ALL participant scores on the leaderboard?')) return;
+      fetch('/api/reset-leaderboard', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-key': adminKey || '' },
+        body: JSON.stringify({ key: adminKey })
+      })
+      .then(res => res.json())
+      .then(() => {
+        leaderboard = [];
+        renderLeaderboard();
+        alert('✅ Leaderboard scores have been reset.');
+      })
+      .catch(() => {
+        leaderboard = [];
+        renderLeaderboard();
+      });
+    }
+
     function renderLeaderboard() {
-      leaderboard.sort((a, b) => b.score !== a.score ? b.score - a.score : a.time - b.time);
       const rows = document.getElementById('lead-rows');
+      const podium = document.getElementById('lead-podium');
       rows.innerHTML = '';
+      podium.innerHTML = '';
+
+      if (!leaderboard || leaderboard.length === 0) {
+        rows.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No participants yet. Scores will appear here once players submit!</td></tr>`;
+        return;
+      }
+
+      // Top 3 Podium Cards
+      const top3 = leaderboard.slice(0, 3);
+      top3.forEach((p, i) => {
+        const medals = ['🥇 1st Place', '🥈 2nd Place', '🥉 3rd Place'];
+        const colors = [
+          'border-amber-500/60 bg-amber-500/10 text-amber-300',
+          'border-slate-400/60 bg-slate-400/10 text-slate-300',
+          'border-amber-700/60 bg-amber-700/10 text-amber-500'
+        ];
+        const card = document.createElement('div');
+        card.className = `p-3 rounded-lg border ${colors[i]} text-xs space-y-0.5`;
+        card.innerHTML = `
+          <div class="font-bold text-[11px] uppercase tracking-wide">${medals[i]}</div>
+          <div class="font-bold text-white text-sm truncate">${p.name}</div>
+          <div class="font-mono text-base font-bold text-amber-400">${p.score} pts</div>
+          <div class="text-[10px] text-slate-400 font-mono">${p.totalTimeSec || p.time || 0}s</div>
+        `;
+        podium.appendChild(card);
+      });
+
+      // Detailed Table Rows
       leaderboard.forEach((p, idx) => {
         const tr = document.createElement('tr');
-        const isMe = (p.name === playerName);
-        tr.className = isMe ? 'bg-amber-500/10 text-white font-bold' : 'hover:bg-slate-800/40 text-slate-300';
+        tr.className = 'hover:bg-slate-800/40 text-slate-300';
         tr.innerHTML = `
-          <td class="p-2.5 text-center font-mono">${idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : '#' + (idx + 1)}</td>
-          <td class="p-2.5">${p.name}${isMe ? ' <span class="text-amber-400 font-bold">(You)</span>' : ''}</td>
+          <td class="p-2.5 text-center font-mono font-bold ${idx === 0 ? 'text-amber-400' : ''}">${idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : '#' + (idx + 1)}</td>
+          <td class="p-2.5 font-medium text-white">${p.name}</td>
           <td class="p-2.5 text-right font-mono font-bold text-amber-400">${p.score} pts</td>
-          <td class="p-2.5 text-center font-mono text-slate-400">${p.time}s</td>
+          <td class="p-2.5 text-center font-mono text-slate-400">${p.totalTimeSec || p.time || 0}s</td>
+          <td class="p-2.5 text-right font-mono text-[11px] text-slate-500">${p.completedAt || '-'}</td>
         `;
         rows.appendChild(tr);
       });
@@ -653,12 +901,24 @@
       if (document.getElementById('chk-2').checked) b += 50;
       if (document.getElementById('chk-3').checked) b += 50;
       if (b === 0) { alert('Check off at least one answer.'); return; }
-      score += b;
-      const p = leaderboard.find(x => x.name === playerName);
-      if (p) p.score += b; else leaderboard.push({ name: playerName, score, time: 30 });
-      alert(`🎉 Awarded +${b} bonus points to ${playerName}!`);
+      
+      const targetName = prompt('Enter player name to award bonus points:', playerName);
+      if (!targetName) return;
+
+      const p = leaderboard.find(x => x.name.toLowerCase() === targetName.trim().toLowerCase());
+      if (p) {
+        p.score += b;
+      } else {
+        leaderboard.push({ name: targetName.trim(), score: b, totalTimeSec: 30, completedAt: 'Bonus' });
+      }
+      leaderboard.sort((a, b) => b.score - a.score);
+      renderLeaderboard();
+      alert(`🎉 Awarded +${b} bonus points to ${targetName.trim()}!`);
       switchTab('lead');
     }
+
+    // Auto-check admin status on load
+    checkAdminStatus();
   </script>
 </body>
 </html>
