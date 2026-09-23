@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guess the Quantity · Live SI Trivia</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    body {
+      background-color: #070d1e;
+      color: #f8fafc;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .gold-glow { box-shadow: 0 0 20px rgba(245, 158, 11, 0.25); }
+    .coral-glow { box-shadow: 0 0 20px rgba(255, 94, 98, 0.25); }
+    .emerald-glow { box-shadow: 0 0 20px rgba(16, 185, 129, 0.25); }
+  </style>
+</head>
+<body class="p-3 sm:p-6 bg-[#070d1e] text-slate-100 min-h-screen">
+  <div class="max-w-3xl mx-auto">
+
+    <!-- Top Header & Tabs -->
+    <header class="flex flex-wrap items-center justify-between border-b border-slate-800 pb-4 mb-6 gap-3">
+      <div class="flex items-center gap-2 cursor-pointer" onclick="setTab('play')">
+        <span class="text-2xl">⚡</span>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-amber-400 to-rose-400 bg-clip-text text-transparent">
+            Guess the Quantity
+          </h1>
+          <p class="text-xs text-slate-400 font-medium">SI Unit Live Trivia · College Edition</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex bg-slate-900/80 p-1 rounded-lg border border-slate-800 text-xs sm:text-sm font-semibold">
+        <button id="tab-btn-play" onclick="setTab('play')" class="px-3 py-1.5 rounded-md bg-amber-500 text-slate-950 font-bold transition">Play</button>
+        <button id="tab-btn-lead" onclick="setTab('lead')" class="px-3 py-1.5 rounded-md text-slate-300 hover:text-white transition flex items-center gap-1.5">
+          <span>Leaderboard</span>
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+        </button>
+        <button id="tab-btn-rules" onclick="setTab('rules')" class="px-3 py-1.5 rounded-md text-slate-300 hover:text-white transition">Rules</button>
+        <button id="tab-btn-detective" onclick="setTab('detective')" class="px-3 py-1.5 rounded-md text-slate-300 hover:text-white transition">Reverse Detective</button>
+      </div>
+    </header>
+
+    <!-- TAB 1: PLAY -->
+    <main id="pane-play" class="space-y-4">
+      
+      <!-- Welcome / Name Registration (Hidden after name input) -->
+      <div id="join-box" class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 text-center space-y-4 shadow-xl">
+        <span class="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full">
+          Live Event Mode
+        </span>
+        <h2 class="text-2xl font-black text-white">Ready for the SI Unit Challenge?</h2>
+        <p class="text-sm text-slate-300 max-w-md mx-auto">
+          10 rounds of progressive clues. Fewer clues used = higher score! Type either the unit name (e.g. <em>Hertz</em>), its symbol (e.g. <em>Hz</em>), or the physical quantity.
+        </p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-md mx-auto text-xs py-2">
+          <div class="bg-slate-950 border border-slate-800 p-2 rounded-lg">1 Clue: <strong class="text-amber-400 font-mono">100 pts</strong></div>
+          <div class="bg-slate-950 border border-slate-800 p-2 rounded-lg">2 Clues: <strong class="text-amber-400 font-mono">75 pts</strong></div>
+          <div class="bg-slate-950 border border-slate-800 p-2 rounded-lg">3 Clues: <strong class="text-amber-400 font-mono">50 pts</strong></div>
+          <div class="bg-slate-950 border border-slate-800 p-2 rounded-lg">4 Clues: <strong class="text-amber-400 font-mono">25 pts</strong></div>
+        </div>
+
+        <form onsubmit="handleStart(event)" class="max-w-md mx-auto flex gap-2 pt-2">
+          <input 
+            id="player-name-in" 
+            type="text" 
+            placeholder="Enter your name / team handle..." 
+            class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-amber-400"
+            required
+            autofocus
+          />
+          <button type="submit" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl hover:opacity-95 text-sm">
+            Begin Game →
+          </button>
+        </form>
+      </div>
+
+      <!-- Active Game Box -->
+      <div id="game-box" class="hidden bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 space-y-4 shadow-xl">
+        
+        <!-- HUD -->
+        <div class="grid grid-cols-3 gap-2 sm:gap-4 text-center">
+          <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5">
+            <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-bold">Round</span>
+            <span class="text-lg sm:text-xl font-extrabold text-white font-mono"><span id="hud-round">1</span>/10</span>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5">
+            <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-bold">At Stake</span>
+            <span id="hud-stake" class="text-lg sm:text-xl font-extrabold text-amber-400 font-mono">100 pts</span>
+          </div>
+          <div class="bg-slate-950/80 border border-slate-800 rounded-xl p-2.5">
+            <span class="block text-[11px] uppercase tracking-wider text-slate-400 font-bold">Your Score</span>
+            <span id="hud-score" class="text-lg sm:text-xl font-extrabold text-rose-400 font-mono">0 pts</span>
+          </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="w-full bg-slate-950 h-2 rounded-full overflow-hidden border border-slate-800">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-500 to-rose-500 transition-all duration-300" style="width: 10%"></div>
+        </div>
+
+        <!-- Mystery Target Heading (Strictly no unit or symbol shown!) -->
+        <div class="bg-slate-950/60 border border-amber-500/20 rounded-xl p-3 text-center">
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-wider">🎯 Mystery SI Unit & Physical Quantity</span>
+          <p class="text-xs text-slate-400 mt-0.5">Clue 1 loaded automatically. Reveal up to 4 clues or guess now!</p>
+        </div>
+
+        <!-- Progressive Clues List -->
+        <div id="clues-list" class="space-y-2.5"></div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <button id="reveal-btn" onclick="revealNextClue()" class="bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-400 font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition">
+            💡 Reveal Next Clue (-25 pts)
+          </button>
+          <button id="skip-btn" onclick="skipRound()" class="text-xs text-slate-400 hover:text-rose-400 transition font-medium border border-dashed border-slate-700 hover:border-rose-500 px-3 py-2 rounded-xl">
+            Skip → Next Question (0 pts)
+          </button>
+        </div>
+
+        <!-- Guess Form -->
+        <form onsubmit="handleGuess(event)" class="pt-2">
+          <div class="flex gap-2">
+            <input 
+              id="guess-in" 
+              type="text" 
+              placeholder="Type your guess (unit, symbol, or quantity)..." 
+              class="flex-1 bg-slate-950 border-2 border-slate-700 focus:border-rose-400 text-white rounded-xl px-4 py-2.5 text-sm outline-none font-medium"
+              autocomplete="off"
+            />
+            <button type="submit" class="bg-gradient-to-r from-rose-500 to-rose-600 text-white font-bold px-6 py-2.5 rounded-xl hover:opacity-95 text-sm transition">
+              Submit
+            </button>
+          </div>
+          <div id="guess-msg" class="text-xs text-center font-semibold mt-2 min-h-[1.25rem]"></div>
+        </form>
+
+      </div>
+
+      <!-- Reveal Card Overlay (Shown for 1.5s on answer) -->
+      <div id="reveal-modal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div id="reveal-card-body" class="bg-slate-900 border-2 border-emerald-500 rounded-2xl p-6 max-w-md w-full text-center space-y-3 emerald-glow">
+          <div id="reveal-badge-icon" class="text-4xl">🎉</div>
+          <h3 id="reveal-title" class="text-xl font-black text-emerald-400">CORRECT GUESS!</h3>
+          <p id="reveal-pts" class="text-sm font-bold font-mono text-amber-400">+100 Points</p>
+          
+          <div class="bg-slate-950 rounded-xl p-3 text-left space-y-1.5 text-xs">
+            <div class="flex justify-between"><span class="text-slate-400">Physical Quantity:</span><strong id="rev-qty" class="text-white"></strong></div>
+            <div class="flex justify-between"><span class="text-slate-400">SI Unit:</span><strong id="rev-unit" class="text-amber-400 font-mono"></strong></div>
+            <div class="flex justify-between"><span class="text-slate-400">Dimensional Formula:</span><code id="rev-form" class="text-slate-200"></code></div>
+          </div>
+          
+          <p id="rev-exp" class="text-xs text-slate-300 leading-relaxed"></p>
+          <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+            <div class="h-full bg-emerald-400 animate-[pulse_1.5s_ease-in-out_infinite]"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary Card (Game End) -->
+      <div id="summary-box" class="hidden bg-slate-900/90 border border-slate-800 rounded-2xl p-6 text-center space-y-4 shadow-xl">
+        <div class="text-5xl">🏆</div>
+        <h2 class="text-2xl font-black text-white">Challenge Completed!</h2>
+        <p class="text-sm text-slate-300">Your score has been recorded on the live event leaderboard.</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-lg mx-auto py-2">
+          <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+            <span class="block text-xs text-slate-400 uppercase font-bold">Total Score</span>
+            <span id="sum-score" class="text-2xl font-extrabold text-amber-400 font-mono">0</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+            <span class="block text-xs text-slate-400 uppercase font-bold">Correct</span>
+            <span id="sum-correct" class="text-2xl font-extrabold text-rose-400 font-mono">0/10</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+            <span class="block text-xs text-slate-400 uppercase font-bold">Time</span>
+            <span id="sum-time" class="text-2xl font-extrabold text-white font-mono">0s</span>
+          </div>
+          <div class="bg-slate-950 border border-slate-800 p-3 rounded-xl">
+            <span class="block text-xs text-slate-400 uppercase font-bold">Rank</span>
+            <span id="sum-rank" class="text-2xl font-extrabold text-amber-400 font-mono">#1</span>
+          </div>
+        </div>
+
+        <div class="flex justify-center gap-3 pt-2">
+          <button onclick="setTab('lead')" class="bg-gradient-to-r from-amber-500 to-amber-600 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm">
+            View Live Leaderboard →
+          </button>
+          <button onclick="restartGame()" class="border border-slate-700 hover:border-slate-500 text-slate-300 px-4 py-2.5 rounded-xl text-sm font-semibold">
+            Play Again
+          </button>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- TAB 2: LEADERBOARD -->
+    <section id="pane-lead" class="hidden space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-5">
+        
+        <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+          <div>
+            <div class="flex items-center gap-2 text-xs font-bold text-emerald-400 uppercase tracking-wider mb-1">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Real-Time Standings
+            </div>
+            <h2 class="text-xl font-bold text-white">Event Leaderboard</h2>
+          </div>
+          <div class="text-xs text-slate-400 bg-slate-950 border border-slate-800 px-3 py-1.5 rounded-lg">
+            👥 Live Standings
+          </div>
+        </div>
+
+        <!-- Top 3 Podium -->
+        <div id="podium-view" class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1"></div>
+
+        <!-- Full Table -->
+        <div class="overflow-x-auto border border-slate-800 rounded-xl">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-slate-950 text-xs text-slate-400 uppercase tracking-wider">
+              <tr>
+                <th class="px-4 py-3 text-center">Rank</th>
+                <th class="px-4 py-3">Player / Team</th>
+                <th class="px-4 py-3 text-right">Score</th>
+                <th class="px-4 py-3 text-center">Time</th>
+              </tr>
+            </thead>
+            <tbody id="leaderboard-rows" class="divide-y divide-slate-800/60 font-medium"></tbody>
+          </table>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: RULES -->
+    <section id="pane-rules" class="hidden space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <h2 class="text-xl font-bold text-white">Event Rules & SI Quantities</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs leading-relaxed">
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-1">
+            <h3 class="font-bold text-amber-400 text-sm">🎯 4 Progressive Clues</h3>
+            <p class="text-slate-300"><strong>Clue 1 (100 pts):</strong> Math & dimensional formula (starts visible instantly).</p>
+            <p class="text-slate-300"><strong>Clue 2 (75 pts):</strong> Visual or behavior description.</p>
+            <p class="text-slate-300"><strong>Clue 3 (50 pts):</strong> Real-world everyday example.</p>
+            <p class="text-slate-300"><strong>Clue 4 (25 pts):</strong> Story clue naming the honored scientist.</p>
+          </div>
+
+          <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-1">
+            <h3 class="font-bold text-rose-400 text-sm">⌨️ Guessing & Scoring</h3>
+            <p class="text-slate-300">Type either the <strong>unit name</strong> (e.g. <em>Hertz</em>), the <strong>symbol</strong> (e.g. <em>Hz</em>), or the <strong>physical quantity</strong> (e.g. <em>Frequency</em>).</p>
+            <p class="text-slate-300">Correct answers auto-advance after 1.5s. If stumped, click <em>Skip</em> for 0 pts.</p>
+          </div>
+        </div>
+
+        <div class="bg-slate-950 border border-slate-800 p-4 rounded-xl space-y-2">
+          <h3 class="font-bold text-sm text-slate-200">Featured 10 SI Quantities in Today's Competition:</h3>
+          <div class="flex flex-wrap gap-1.5 text-xs font-mono">
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Frequency (Hz)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Electric Charge (C)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Energy / Work (J)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Capacitance (F)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Inductance (H)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Magnetic Flux (Wb)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Conductance (S)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Magnetic Flux Density (T)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Signal Level (dB)</span>
+            <span class="bg-slate-900 border border-slate-700 px-2.5 py-1 rounded-md text-amber-300">Radioactivity (Bq)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: REVERSE DETECTIVE -->
+    <section id="pane-detective" class="hidden space-y-4">
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 sm:p-6 shadow-xl space-y-4">
+        <div class="border-b border-slate-800 pb-3">
+          <span class="text-xs font-bold text-rose-400 uppercase tracking-wider">🎙️ Host Checklist Tool</span>
+          <h2 class="text-xl font-bold text-white">Bonus Round: "Reverse Detective"</h2>
+          <p class="text-xs text-slate-400">The player sees only the target unit and must deduce the 3 missing pillars.</p>
+        </div>
+
+        <!-- Mystery Target -->
+        <div class="bg-slate-950 border border-dashed border-amber-500/40 rounded-xl p-5 text-center space-y-1">
+          <span class="text-xs text-slate-400 uppercase tracking-widest font-bold">GIVEN UNIT ONLY</span>
+          <div class="text-4xl font-extrabold text-amber-400 font-mono">Volt (V)</div>
+          <div class="text-xs text-slate-300">Dimensional formula: <code>kg·m²/(A·s³)</code> or <code>J/C</code></div>
+        </div>
+
+        <!-- Checklist -->
+        <div class="space-y-2.5">
+          <label class="flex items-start gap-3 bg-slate-950 border border-slate-800 hover:border-slate-700 p-3 rounded-xl cursor-pointer">
+            <input type="checkbox" id="chk-sci" onchange="calcBonus()" class="mt-1 accent-emerald-500 w-4 h-4 rounded">
+            <div class="text-xs">
+              <strong class="text-amber-400 text-sm block">1. Scientist Name (+50 pts)</strong>
+              <div class="text-slate-200"><strong>Alessandro Volta</strong> (1745–1827)</div>
+              <div class="text-slate-400">Invented the Voltaic pile (first chemical battery) in 1800.</div>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 bg-slate-950 border border-slate-800 hover:border-slate-700 p-3 rounded-xl cursor-pointer">
+            <input type="checkbox" id="chk-qty" onchange="calcBonus()" class="mt-1 accent-emerald-500 w-4 h-4 rounded">
+            <div class="text-xs">
+              <strong class="text-amber-400 text-sm block">2. Physical Quantity (+50 pts)</strong>
+              <div class="text-slate-200"><strong>Electric Potential Difference / Voltage / EMF</strong></div>
+              <div class="text-slate-400">Work needed per unit charge between two electrostatic points.</div>
+            </div>
+          </label>
+
+          <label class="flex items-start gap-3 bg-slate-950 border border-slate-800 hover:border-slate-700 p-3 rounded-xl cursor-pointer">
+            <input type="checkbox" id="chk-ex" onchange="calcBonus()" class="mt-1 accent-emerald-500 w-4 h-4 rounded">
+            <div class="text-xs">
+              <strong class="text-amber-400 text-sm block">3. Real-World Practical Example (+50 pts)</strong>
+              <div class="text-slate-200"><strong>AA battery (~1.5V), USB (5V), Car battery (12V), Wall outlet (120V/230V)</strong></div>
+              <div class="text-slate-400">Must cite any physically accurate voltage level.</div>
+            </div>
+          </label>
+        </div>
+
+        <div class="flex items-center justify-between bg-slate-950 p-3 rounded-xl border border-slate-800 text-xs">
+          <div>
+            <span>Bonus Points Awarded: </span>
+            <strong id="bonus-tally-num" class="text-amber-400 text-sm font-mono font-bold">0 / 150 pts</strong>
+          </div>
+          <button onclick="awardBonusPoints()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-4 py-2 rounded-lg text-xs">
+            Award to Current Player
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    // --- QUESTIONS DATA ---
+    const QUESTIONS = [
+      {
+        id: 1,
+        quantity: "Frequency",
+        unit: "Hertz",
+        symbol: "Hz",
+        dimensionalFormula: "s⁻¹ or T⁻¹",
+        aliases: ["hertz", "hz", "frequency", "freq", "1/s", "s^-1"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: s⁻¹ (or T⁻¹ in base SI). Inversely proportional to time period: f = 1 / T." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: A repeating sine wave on an oscilloscope or ripples in water; counting cycles per second." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Human hearing is ~20 to 20,000 of me. Middle A concert pitch vibrates at 440 of me. Wi-Fi runs at 2.4 or 5 GHz." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Heinrich Hertz, who in 1887 built spark-gap transmitters to experimentally prove electromagnetic radio waves." }
+        ],
+        explanation: "Frequency measures repeating cycles per second. Its SI unit is the Hertz (Hz = 1/s)."
+      },
+      {
+        id: 2,
+        quantity: "Electric Charge",
+        unit: "Coulomb",
+        symbol: "C",
+        dimensionalFormula: "A·s or I·T",
+        aliases: ["coulomb", "coulombs", "c", "charge", "electric charge", "a*s", "as"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: A·s (or I·T). Defined as the time integral of electric current: Q = I × t." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: Gold leaves diverging inside an electroscope due to electrostatic repulsion, or an amber rod rubbed with wool." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: One elementary electron carries 1.602 × 10⁻¹⁹ of me. A summer lightning bolt delivers ~15 of me." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Charles-Augustin de Coulomb, who used a torsion balance in 1785 to establish the inverse-square electrostatic law." }
+        ],
+        explanation: "Electric Charge is the fundamental property that causes matter to experience force in an electromagnetic field (C = A·s)."
+      },
+      {
+        id: 3,
+        quantity: "Energy / Work",
+        unit: "Joule",
+        symbol: "J",
+        dimensionalFormula: "kg·m²/s² or M·L²·T⁻²",
+        aliases: ["joule", "joules", "j", "energy", "work", "heat", "n*m", "nm", "w*s"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg·m²/s² (or M·L²·T⁻²). Equals 1 Newton-meter (N·m) or 1 Watt-second (W·s)." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: A compressed archery spring releasing, a roller-coaster descending, or mechanical work heating water." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Lifting a 100g apple vertically by 1 meter against Earth gravity takes ~1 of me. One food Calorie ≈ 4,184 of me." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after James Prescott Joule, who stirred water with paddle wheels driven by falling weights to prove mechanical equivalence of heat." }
+        ],
+        explanation: "Energy is the capacity to do work. Its SI unit is the Joule (J = N·m = kg·m²/s²)."
+      },
+      {
+        id: 4,
+        quantity: "Capacitance",
+        unit: "Farad",
+        symbol: "F",
+        dimensionalFormula: "kg⁻¹·m⁻²·s⁴·A² or M⁻¹·L⁻²·T⁴·I²",
+        aliases: ["farad", "farads", "f", "capacitance", "capacitor", "c/v"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg⁻¹·m⁻²·s⁴·A². Defined as 1 Coulomb of stored charge per 1 Volt of potential difference: C = Q / V." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: Two parallel conductive plates separated by an insulating dielectric (ceramic or mica) storing separated electrostatic charges." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: One whole unit is huge! Motherboard cylindrical cans are rated in micro-____ (µF). Earth's self-capacitance is only ~710 µF." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Michael Faraday, who discovered electromagnetic induction, invented the electric motor, and created the Faraday cage." }
+        ],
+        explanation: "Capacitance is the ratio of electric charge to the potential difference across conductors. SI unit: Farad (F = C/V)."
+      },
+      {
+        id: 5,
+        quantity: "Inductance",
+        unit: "Henry",
+        symbol: "H",
+        dimensionalFormula: "kg·m²·s⁻²·A⁻² or M·L²·T⁻²·I⁻²",
+        aliases: ["henry", "henries", "henrys", "h", "inductance", "inductor", "wb/a"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg·m²·s⁻²·A⁻². In derived units: 1 Weber per Ampere (Wb/A) or 1 Volt-second per Ampere: V = -L (dI/dt)." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: A tight copper coil or solenoid wound on an iron core, generating a back-EMF that resists any sudden change in current." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Found in electric guitar pickups, wireless charging pads, and transformer chokes. Small coils are ~µH, heavy coils are several of me." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Joseph Henry, the American physicist who discovered electromagnetic self-inductance and led the Smithsonian Institution." }
+        ],
+        explanation: "Inductance is the property where a change in current induces an opposing electromotive force. SI unit: Henry (H = Wb/A)."
+      },
+      {
+        id: 6,
+        quantity: "Magnetic Flux",
+        unit: "Weber",
+        symbol: "Wb",
+        dimensionalFormula: "kg·m²·s⁻²·A⁻¹ or M·L²·T⁻²·I⁻¹",
+        aliases: ["weber", "webers", "wb", "magnetic flux", "flux", "v*s", "vs", "t*m^2"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg·m²·s⁻²·A⁻¹. Equals 1 Volt-second (V·s) or 1 Tesla-square meter (T·m²), defined by Φ = ∬ B · dA." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: Magnetic field lines piercing through an enclosed circular wire hoop or cross-sectional area." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: A change of 1 of me in 1 second through a single-turn coil induces 1 Volt of EMF, powering dynamo generators." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Wilhelm Eduard Weber, the German physicist who worked with Gauss on geomagnetism and built an early 1833 telegraph." }
+        ],
+        explanation: "Magnetic Flux measures the total magnetic field passing through a given surface. SI unit: Weber (Wb = V·s)."
+      },
+      {
+        id: 7,
+        quantity: "Conductance",
+        unit: "Siemens",
+        symbol: "S",
+        dimensionalFormula: "kg⁻¹·m⁻²·s³·A² or M⁻¹·L⁻²·T³·I²",
+        aliases: ["siemens", "s", "conductance", "electrical conductance", "mho", "1/ohm"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg⁻¹·m⁻²·s³·A². The exact mathematical reciprocal of resistance: G = 1/R = I/V. Historically called 'mho' (℧)." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: An open, frictionless multi-lane highway or valve showing how easily electrons flow through a circuit." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Water purity and aquarium testers measure me in µS/cm to detect dissolved mineral salts and salinity." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Werner von Siemens, the German inventor and industrialist who founded Siemens AG and built Europe's first electric railway." }
+        ],
+        explanation: "Conductance is the measure of how easily electric current flows through a component (the inverse of resistance). SI unit: Siemens (S = 1/Ω)."
+      },
+      {
+        id: 8,
+        quantity: "Magnetic Flux Density",
+        unit: "Tesla",
+        symbol: "T",
+        dimensionalFormula: "kg·s⁻²·A⁻¹ or M·T⁻²·I⁻¹",
+        aliases: ["tesla", "teslas", "t", "magnetic flux density", "magnetic field", "b field", "wb/m^2"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: kg·s⁻²·A⁻¹. Equals 1 Weber per square meter (Wb/m²) or 1 Newton per Ampere-meter. In Lorentz force: F = q(v × B)." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: Fine iron filings forming dense curved paths around strong magnet poles, showing field intensity." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Earth's geomagnetic field is ~50 µT. A fridge magnet is ~5 mT. Clinical hospital MRI scanners run at 1.5 to 3 of me." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Nikola Tesla, the Serbian-American genius whose AC patents and induction motors powered the electric age." }
+        ],
+        explanation: "Magnetic Flux Density (B-field) measures the strength and concentration of a magnetic field per unit area. SI unit: Tesla (T = Wb/m²)."
+      },
+      {
+        id: 9,
+        quantity: "Signal / Sound Level",
+        unit: "Decibel",
+        symbol: "dB",
+        dimensionalFormula: "Dimensionless (Logarithmic Ratio)",
+        aliases: ["decibel", "decibels", "db", "bel", "bels", "sound level", "volume", "loudness"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensionless logarithmic ratio unit: L = 10 log₁₀(P / P₀) or 20 log₁₀(V / V₀)." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: Bouncing green-to-red LED VU peak meters on an audio DJ mixer, or equal loudness hearing curves." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: A faint whisper is ~30 of me, conversation is ~60 of me, a rock concert is ~110 of me, and 130 of me is ear pain threshold." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Combines 'deci-' (one-tenth) with the 'Bel', named after Alexander Graham Bell, inventor of the telephone." }
+        ],
+        explanation: "The Decibel (dB) is a logarithmic unit expressing the ratio between two values of a physical quantity (named after Alexander Graham Bell)."
+      },
+      {
+        id: 10,
+        quantity: "Radioactivity",
+        unit: "Becquerel",
+        symbol: "Bq",
+        dimensionalFormula: "s⁻¹ or T⁻¹",
+        aliases: ["becquerel", "becquerels", "bq", "radioactivity", "activity", "decay rate"],
+        clues: [
+          { level: 1, pts: 100, label: "Clue 1 · Math & Dimensions (100 pts)", text: "Dimensional formula: s⁻¹. Unlike frequency, I measure spontaneous stochastic decay: exactly 1 nuclear transformation per second." },
+          { level: 2, pts: 75, label: "Clue 2 · Visual & Behavior (75 pts)", text: "Visual clue: A ticking Geiger-Müller counter needle jumping as alpha/beta/gamma particles radiate from unstable atomic nuclei." },
+          { level: 3, pts: 50, label: "Clue 3 · Real-World Example (50 pts)", text: "Real-world clue: Eating one supermarket banana emits ~15 of me due to Potassium-40. The human body naturally radiates ~4,500 of me." },
+          { level: 4, pts: 25, label: "Clue 4 · Scientist & History (25 pts)", text: "Scientist clue: Named after Henri Becquerel, who in 1896 placed uranium salts in a dark drawer next to photo plates, discovering natural radioactivity." }
+        ],
+        explanation: "Radioactivity (Activity) is the rate of spontaneous nuclear disintegration. SI unit: Becquerel (Bq = 1 decay/s)."
+      }
+    ];
+
+    // --- GAME STATE ---
+    let currentRound = 0;
+    let cluesShown = 1;
+    let score = 0;
+    let correctCount = 0;
+    let startTime = null;
+    let playerName = "Player";
+    let leaderboard = [
+      { name: "QuantumLeap", score: 875, time: 74 },
+      { name: "Sarah M.", score: 800, time: 65 },
+      { name: "Alex R.", score: 725, time: 82 },
+      { name: "Photon_99", score: 650, time: 90 },
+      { name: "Nikola Fan", score: 550, time: 110 }
+    ];
+
+    // Check if server API is reachable to sync leaderboard
+    fetch('/api/leaderboard')
+      .then(res => res.json())
+      .then(data => {
+        if (data && Array.isArray(data) && data.length > 0) {
+          leaderboard = data.map(d => ({ name: d.name, score: d.score, time: d.totalTimeSec }));
+        }
+      })
+      .catch(() => {});
+
+    // --- NAVIGATION ---
+    function setTab(tab) {
+      ['play', 'lead', 'rules', 'detective'].forEach(t => {
+        document.getElementById(`pane-${t}`).classList.toggle('hidden', t !== tab);
+        const btn = document.getElementById(`tab-btn-${t}`);
+        if (t === tab) {
+          btn.className = "px-3 py-1.5 rounded-md bg-amber-500 text-slate-950 font-bold transition";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-md text-slate-300 hover:text-white transition";
+        }
+      });
+
+      if (tab === 'lead') renderLeaderboard();
+      if (tab === 'play' && !document.getElementById('game-box').classList.contains('hidden')) {
+        document.getElementById('guess-in').focus();
+      }
+    }
+
+    // --- GAMEPLAY ---
+    function handleStart(e) {
+      e.preventDefault();
+      const inVal = document.getElementById('player-name-in').value.trim();
+      if (!inVal) return;
+      playerName = inVal;
+      startTime = Date.now();
+      currentRound = 0;
+      score = 0;
+      correctCount = 0;
+
+      document.getElementById('join-box').classList.add('hidden');
+      document.getElementById('summary-box').classList.add('hidden');
+      document.getElementById('game-box').classList.remove('hidden');
+
+      loadRound(0);
+    }
+
+    function loadRound(idx) {
+      currentRound = idx;
+      cluesShown = 1; // Clue 1 visible automatically!
+      const q = QUESTIONS[idx];
+
+      document.getElementById('hud-round').textContent = idx + 1;
+      document.getElementById('hud-stake').textContent = "100 pts";
+      document.getElementById('hud-score').textContent = `${score} pts`;
+      document.getElementById('progress-bar').style.width = `${((idx + 1) / QUESTIONS.length) * 100}%`;
+
+      document.getElementById('guess-in').value = '';
+      document.getElementById('guess-msg').textContent = '';
+      document.getElementById('guess-msg').className = 'text-xs text-center font-semibold mt-2 min-h-[1.25rem]';
+
+      renderClues();
+      updateButtons();
+      setTimeout(() => document.getElementById('guess-in').focus(), 50);
+    }
+
+    function renderClues() {
+      const q = QUESTIONS[currentRound];
+      const list = document.getElementById('clues-list');
+      list.innerHTML = '';
+
+      for (let i = 0; i < cluesShown; i++) {
+        const c = q.clues[i];
+        const card = document.createElement('div');
+        const isActive = (i === cluesShown - 1);
+        card.className = `p-3.5 rounded-xl border text-xs sm:text-sm leading-relaxed ${
+          isActive 
+            ? 'bg-slate-950/90 border-amber-500/40 shadow-md' 
+            : 'bg-slate-950/50 border-slate-800 text-slate-300'
+        }`;
+        card.innerHTML = `
+          <div class="font-bold text-amber-400 font-mono text-[11px] mb-1">${c.label}</div>
+          <div>${c.text}</div>
+        `;
+        list.appendChild(card);
+      }
+    }
+
+    function updateButtons() {
+      const btn = document.getElementById('reveal-btn');
+      const stake = document.getElementById('hud-stake');
+      const pts = [100, 75, 50, 25][cluesShown - 1];
+      stake.textContent = `${pts} pts`;
+
+      if (cluesShown < 4) {
+        btn.disabled = false;
+        btn.textContent = `💡 Reveal Next Clue (-25 pts)`;
+        btn.className = "bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-amber-400 font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl transition";
+      } else {
+        btn.disabled = true;
+        btn.textContent = `All 4 Clues Revealed (25 pts)`;
+        btn.className = "opacity-50 cursor-not-allowed border border-slate-700 text-slate-400 font-semibold text-xs sm:text-sm px-4 py-2 rounded-xl";
+      }
+    }
+
+    function revealNextClue() {
+      if (cluesShown < 4) {
+        cluesShown++;
+        renderClues();
+        updateButtons();
+        document.getElementById('guess-in').focus();
+      }
+    }
+
+    function norm(str) {
+      return (str || '').toLowerCase().trim().replace(/[^a-z0-9]/g, '');
+    }
+
+    function handleGuess(e) {
+      e.preventDefault();
+      const val = document.getElementById('guess-in').value.trim();
+      if (!val) return;
+
+      const q = QUESTIONS[currentRound];
+      const gNorm = norm(val);
+      const isMatch = (
+        gNorm === norm(q.unit) || 
+        gNorm === norm(q.symbol) || 
+        gNorm === norm(q.quantity) ||
+        (q.aliases && q.aliases.some(a => norm(a) === gNorm)) ||
+        (gNorm.endsWith('s') && gNorm.slice(0, -1) === norm(q.unit))
+      );
+
+      if (isMatch) {
+        const earned = [100, 75, 50, 25][cluesShown - 1];
+        score += earned;
+        correctCount++;
+        showRevealModal(true, earned, q);
+      } else {
+        const msg = document.getElementById('guess-msg');
+        msg.textContent = "❌ Not quite! Reveal another clue or try another SI unit/symbol.";
+        msg.className = "text-xs text-center font-semibold mt-2 text-rose-400 min-h-[1.25rem]";
+        document.getElementById('guess-in').select();
+      }
+    }
+
+    function skipRound() {
+      const q = QUESTIONS[currentRound];
+      showRevealModal(false, 0, q);
+    }
+
+    function showRevealModal(isCorrect, pts, q) {
+      const modal = document.getElementById('reveal-modal');
+      const body = document.getElementById('reveal-card-body');
+      const title = document.getElementById('reveal-title');
+      const icon = document.getElementById('reveal-badge-icon');
+      const ptsTxt = document.getElementById('reveal-pts');
+
+      if (isCorrect) {
+        body.className = "bg-slate-900 border-2 border-emerald-500 rounded-2xl p-6 max-w-md w-full text-center space-y-3 emerald-glow";
+        icon.textContent = "🎉";
+        title.textContent = "CORRECT GUESS!";
+        title.className = "text-xl font-black text-emerald-400";
+        ptsTxt.textContent = `+${pts} Points Earned`;
+      } else {
+        body.className = "bg-slate-900 border-2 border-rose-500 rounded-2xl p-6 max-w-md w-full text-center space-y-3 coral-glow";
+        icon.textContent = "⏭️";
+        title.textContent = "QUESTION SKIPPED";
+        title.className = "text-xl font-black text-rose-400";
+        ptsTxt.textContent = "0 Points";
+      }
+
+      document.getElementById('rev-qty').textContent = q.quantity;
+      document.getElementById('rev-unit').textContent = `${q.unit} (${q.symbol})`;
+      document.getElementById('rev-form').textContent = q.dimensionalFormula;
+      document.getElementById('rev-exp').textContent = q.explanation;
+
+      modal.classList.remove('hidden');
+
+      setTimeout(() => {
+        modal.classList.add('hidden');
+        if (currentRound < QUESTIONS.length - 1) {
+          loadRound(currentRound + 1);
+        } else {
+          finishGame();
+        }
+      }, 1500);
+    }
+
+    function finishGame() {
+      const timeSec = Math.round((Date.now() - startTime) / 1000);
+      document.getElementById('game-box').classList.add('hidden');
+      document.getElementById('summary-box').classList.remove('hidden');
+
+      document.getElementById('sum-score').textContent = score;
+      document.getElementById('sum-correct').textContent = `${correctCount}/10`;
+      document.getElementById('sum-time').textContent = `${timeSec}s`;
+
+      // Save to leaderboard
+      leaderboard.push({ name: playerName, score, time: timeSec });
+      leaderboard.sort((a, b) => b.score !== a.score ? b.score - a.score : a.time - b.time);
+
+      const rank = leaderboard.findIndex(p => p.name === playerName && p.score === score) + 1;
+      document.getElementById('sum-rank').textContent = `#${rank || 1}`;
+
+      // Also post to backend if available
+      fetch('/api/score', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: playerName, score, totalTimeSec: timeSec })
+      }).catch(() => {});
+    }
+
+    function restartGame() {
+      document.getElementById('summary-box').classList.add('hidden');
+      document.getElementById('game-box').classList.remove('hidden');
+      currentRound = 0;
+      score = 0;
+      correctCount = 0;
+      startTime = Date.now();
+      loadRound(0);
+    }
+
+    // --- LEADERBOARD RENDERING ---
+    function renderLeaderboard() {
+      leaderboard.sort((a, b) => b.score !== a.score ? b.score - a.score : a.time - b.time);
+
+      // Top 3 Podium
+      const podium = document.getElementById('podium-view');
+      podium.innerHTML = '';
+      const top3 = [leaderboard[0], leaderboard[1], leaderboard[2]];
+
+      const config = [
+        { item: top3[1], medal: '🥈 2nd', border: 'border-slate-400 bg-slate-900/60', rank: 2 },
+        { item: top3[0], medal: '🥇 1st (👑 Crown)', border: 'border-amber-400 bg-amber-500/10 scale-105', rank: 1 },
+        { item: top3[2], medal: '🥉 3rd', border: 'border-amber-700 bg-slate-900/60', rank: 3 }
+      ];
+
+      config.forEach(c => {
+        if (c.item) {
+          const card = document.createElement('div');
+          card.className = `border rounded-xl p-3 text-center space-y-1 ${c.border}`;
+          card.innerHTML = `
+            <div class="text-xs font-bold text-amber-400">${c.medal}</div>
+            <div class="font-bold text-white text-sm truncate">${c.item.name}</div>
+            <div class="text-lg font-mono font-black text-amber-400">${c.item.score} <small class="text-xs font-normal text-slate-400">pts</small></div>
+            <div class="text-[11px] text-slate-400">⏱️ ${c.item.time}s</div>
+          `;
+          podium.appendChild(card);
+        }
+      });
+
+      // Rows
+      const rows = document.getElementById('leaderboard-rows');
+      rows.innerHTML = '';
+      leaderboard.forEach((p, idx) => {
+        const tr = document.createElement('tr');
+        const isMe = (p.name === playerName);
+        tr.className = isMe ? 'bg-amber-500/10 text-white font-bold' : 'hover:bg-slate-800/40 text-slate-300';
+        tr.innerHTML = `
+          <td class="px-4 py-2.5 text-center font-mono">${idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : '#' + (idx + 1)}</td>
+          <td class="px-4 py-2.5">${p.name}${isMe ? ' <span class="text-amber-400 font-bold">(You)</span>' : ''}</td>
+          <td class="px-4 py-2.5 text-right font-mono font-bold text-amber-400">${p.score} pts</td>
+          <td class="px-4 py-2.5 text-center font-mono text-slate-400 text-xs">${p.time}s</td>
+        `;
+        rows.appendChild(tr);
+      });
+    }
+
+    // --- REVERSE DETECTIVE BONUS ---
+    function calcBonus() {
+      let pts = 0;
+      if (document.getElementById('chk-sci').checked) pts += 50;
+      if (document.getElementById('chk-qty').checked) pts += 50;
+      if (document.getElementById('chk-ex').checked) pts += 50;
+      document.getElementById('bonus-tally-num').textContent = `${pts} / 150 pts`;
+    }
+
+    function awardBonusPoints() {
+      let pts = 0;
+      if (document.getElementById('chk-sci').checked) pts += 50;
+      if (document.getElementById('chk-qty').checked) pts += 50;
+      if (document.getElementById('chk-ex').checked) pts += 50;
+
+      if (pts === 0) {
+        alert('Check off at least one verified answer to award points.');
+        return;
+      }
+
+      score += pts;
+      document.getElementById('hud-score').textContent = `${score} pts`;
+
+      const playerEntry = leaderboard.find(p => p.name === playerName);
+      if (playerEntry) {
+        playerEntry.score += pts;
+      } else {
+        leaderboard.push({ name: playerName, score, time: 30 });
+      }
+
+      alert(`🎉 Awarded +${pts} bonus points to ${playerName}!`);
+      setTab('lead');
+    }
+  </script>
+</body>
+</html>

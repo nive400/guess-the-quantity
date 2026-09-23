@@ -1,0 +1,822 @@
+[
+  {
+    "id": 1,
+    "quantity": "Electric Potential Difference / Electromotive Force",
+    "unit": "Volt",
+    "symbol": "V",
+    "aliases": ["volt", "volts", "v", "voltage"],
+    "dimensionalFormula": "kg·m²/(A·s³) or M·L²·T⁻³·I⁻¹",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I am named after an Italian count who stacked alternating discs of copper and zinc separated by brine-soaked cloth in 1800, creating the world's first true chemical battery."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "In SI base units, my dimensional formula is kg·m²·s⁻³·A⁻¹. One of me equals one Joule of energy expended per Coulomb of electric charge moved."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A standard AA alkaline battery supplies 1.5 of me, a USB phone charger delivers 5 of me, and household wall outlets in North America supply 120 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Circuit Diagram",
+        "text": "⚡ In Ohm's law, I equal I × R. In circuit schematics, a rectangular block or circle with '9 ___' beside two parallel battery plates represents me."
+      }
+    ],
+    "explanation": "Named after Alessandro Volta. The volt (V) is the derived unit for electric potential, electric potential difference, and electromotive force.",
+    "reverseDetective": {
+      "quantityName": "Electric Potential / Voltage",
+      "scientist": "Alessandro Volta",
+      "realWorldExamples": ["AA battery (1.5V)", "Wall socket (120V/230V)", "USB port (5V)", "Car battery (12V)"],
+      "keywords": ["volta", "battery", "potential", "charge", "joule per coulomb"]
+    }
+  },
+  {
+    "id": 2,
+    "quantity": "Force",
+    "unit": "Newton",
+    "symbol": "N",
+    "aliases": ["newton", "newtons", "n", "force"],
+    "dimensionalFormula": "kg·m/s² or M·L·T⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a luminary who fled Cambridge during the Great Plague of 1665 to his family estate at Woolsthorpe, where an orchard legend cemented his laws of motion and gravitation."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is M·L·T⁻² (kg·m/s²). I am defined as the amount needed to accelerate a 1-kilogram mass at a rate of 1 meter per second squared."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "The downward gravitational force of a medium-sized apple resting peacefully in the palm of your hand is almost exactly equal to 1 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Formula / Pop-Culture",
+        "text": "🍎 The most iconic equation in classical mechanics: F = m · a. In Star Wars, Obi-Wan might say 'May the ___ be with you!'"
+      }
+    ],
+    "explanation": "Named after Sir Isaac Newton. 1 Newton is 1 kg·m/s², roughly equivalent to the weight of a 102g apple on Earth's surface.",
+    "reverseDetective": {
+      "quantityName": "Force",
+      "scientist": "Isaac Newton",
+      "realWorldExamples": ["Weight of an apple (~1 N)", "Rocket thrust", "Weight of 100kg person (~980 N)"],
+      "keywords": ["newton", "apple", "gravity", "mass times acceleration", "f=ma"]
+    }
+  },
+  {
+    "id": 3,
+    "quantity": "Power",
+    "unit": "Watt",
+    "symbol": "W",
+    "aliases": ["watt", "watts", "w", "power"],
+    "dimensionalFormula": "kg·m²/(s³) or M·L²·T⁻³",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I am named after a Scottish mechanical engineer whose separate condenser drastically improved the Newcomen engine and accelerated the Industrial Revolution."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is kg·m²·s⁻³ (or M·L²·T⁻³). I measure the rate at which work is performed: precisely 1 Joule transferred in 1 second."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A standard incandescent reading bulb draws 60 of me, an electric microwave uses roughly 1,000 of me, and 746 of me make up one 'horsepower'."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Pop-Culture / Meme",
+        "text": "💡 In 'Back to the Future', Doc Brown famously shrieks: '1.21 GIGA-____?! Great Scott!' What unit was he screaming about?"
+      }
+    ],
+    "explanation": "Named after James Watt. The watt measures the time rate of energy transfer (1 W = 1 J/s).",
+    "reverseDetective": {
+      "quantityName": "Power / Rate of Energy Transfer",
+      "scientist": "James Watt",
+      "realWorldExamples": ["60W lightbulb", "1000W microwave", "746W = 1 horsepower", "Doc Brown's 1.21 Gigawatts"],
+      "keywords": ["watt", "steam engine", "joule per second", "horsepower", "lightbulb"]
+    }
+  },
+  {
+    "id": 4,
+    "quantity": "Pressure / Mechanical Stress",
+    "unit": "Pascal",
+    "symbol": "Pa",
+    "aliases": ["pascal", "pascals", "pa", "pressure"],
+    "dimensionalFormula": "kg/(m·s²) or M·L⁻¹·T⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a French polymath, philosopher, and religious writer who studied hydrodynamics, created an early mechanical calculator (the Pascaline), and wagered on the existence of God."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "In SI units, I equal 1 Newton of perpendicular force uniformly applied over a surface area of 1 square meter (1 N/m² = kg·m⁻¹·s⁻²)."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A single dollar bill or banknote lying flat on a table exerts about 1 of me. Standard atmospheric pressure at sea level is approximately 101,325 of me (or 1,013.25 hPa)."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Joke",
+        "text": "Barometers, car tire PSI gauges, and weather maps measuring isobars rely on me. A classic physicist joke: 'Einstein, Newton, and ___ play hide and seek...'"
+      }
+    ],
+    "explanation": "Named after Blaise Pascal. One Pascal is one newton per square meter (N/m²). Standard atmospheric pressure is 101.325 kPa.",
+    "reverseDetective": {
+      "quantityName": "Pressure / Stress",
+      "scientist": "Blaise Pascal",
+      "realWorldExamples": ["Atmospheric pressure (101.3 kPa)", "Car tire (~220 kPa)", "Dollar bill on table (1 Pa)"],
+      "keywords": ["pascal", "barometer", "force per unit area", "hydraulic", "pressure"]
+    }
+  },
+  {
+    "id": 5,
+    "quantity": "Energy / Work / Heat",
+    "unit": "Joule",
+    "symbol": "J",
+    "aliases": ["joule", "joules", "j", "energy", "work"],
+    "dimensionalFormula": "kg·m²/s² or M·L²·T⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I am named after an English brewer and amateur physicist who meticulously stirred water with brass paddles driven by falling weights to prove the mechanical equivalence of heat."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensions are M·L²·T⁻² (kg·m²·s⁻²). In terms of other units, I equal 1 Newton-meter, or 1 Watt-second, or 1 Coulomb-Volt."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Lifting a medium 100-gram tomato vertically upwards by exactly 1 meter on Earth requires roughly 1 of me. One dietary nutritional Calorie equals roughly 4,184 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Formula / Symbol",
+        "text": "E = mc², Kinetic Energy = ½ m v², and Work = F · d. Every form of work, heat, and radiation shares me as their official SI metric."
+      }
+    ],
+    "explanation": "Named after James Prescott Joule. The Joule is the SI unit of work and energy, equal to the work done by a force of one newton through a displacement of one meter.",
+    "reverseDetective": {
+      "quantityName": "Energy / Work / Heat",
+      "scientist": "James Prescott Joule",
+      "realWorldExamples": ["Lifting an apple 1 meter (1 J)", "1 food Calorie (~4184 J)", "Kinetic energy of tennis serve (~150 J)"],
+      "keywords": ["joule", "heat", "mechanical equivalent", "work", "newton-meter"]
+    }
+  },
+  {
+    "id": 6,
+    "quantity": "Frequency",
+    "unit": "Hertz",
+    "symbol": "Hz",
+    "aliases": ["hertz", "hz", "frequency", "cycles"],
+    "dimensionalFormula": "s⁻¹ or T⁻¹",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor the German physicist who in 1887 built spark-gap transmitters and parabolic zinc reflectors to first experimentally prove Maxwell's electromagnetic waves existed."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "I have the simplest dimensional formula in the SI derived unit roster: simply s⁻¹ (or 1/second). I define exactly one repeating periodic cycle or event per second."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Human hearing spans roughly 20 to 20,000 of me. A concert pitch tuning fork for Middle A vibrates at 440 of me. A modern computer processor clocks at 3 to 5 Giga-____."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Meme / Wordplay",
+        "text": "📻 FM Radio stations tune in Megame (e.g. 101.1 MHz). Dad joke: 'What unit of frequency causes physical pain when you stub your toe? Ouch, that really ____!'"
+      }
+    ],
+    "explanation": "Named after Heinrich Hertz. One hertz equals one cycle per second.",
+    "reverseDetective": {
+      "quantityName": "Frequency",
+      "scientist": "Heinrich Hertz",
+      "realWorldExamples": ["440 Hz (Concert A pitch)", "20Hz-20kHz (human hearing)", "2.4 GHz (Wi-Fi router)", "60Hz/120Hz display refresh"],
+      "keywords": ["hertz", "radio waves", "cycles per second", "frequency", "oscillation"]
+    }
+  },
+  {
+    "id": 7,
+    "quantity": "Electrical Resistance / Impedance",
+    "unit": "Ohm",
+    "symbol": "Ω",
+    "aliases": ["ohm", "ohms", "omega", "resistance"],
+    "dimensionalFormula": "kg·m²/(A²·s³) or M·L²·T⁻³·I⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I am named after a Bavarian schoolteacher who used thermocouple wires to demonstrate that electrical current is directly proportional to voltage difference across a conductor."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is kg·m²·s⁻³·A⁻² (or Volt / Ampere). I quantify an object's opposition to the free passage of an electric current."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Typical studio headphones have an impedance of 32 or 250 of me. Dry human skin presents a resistance of 10,000 to 100,000 of me, but wet skin drops dramatically."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Greek Symbol",
+        "text": "My official scientific unit symbol is the Greek capital letter Omega: Ω. The color-coded banded ceramic components on green motherboards measure me."
+      }
+    ],
+    "explanation": "Named after Georg Simon Ohm. 1 Ohm is the electrical resistance between two points when a conductor allows 1 ampere under 1 volt.",
+    "reverseDetective": {
+      "quantityName": "Electrical Resistance / Impedance",
+      "scientist": "Georg Simon Ohm",
+      "realWorldExamples": ["32 ohm headphones", "Resistor bands", "Skin resistance (100k ohm)"],
+      "keywords": ["ohm", "resistor", "v=ir", "omega", "impedance"]
+    }
+  },
+  {
+    "id": 8,
+    "quantity": "Magnetic Flux Density / Magnetic B-Field",
+    "unit": "Tesla",
+    "symbol": "T",
+    "aliases": ["tesla", "teslas", "t", "magnetic flux density"],
+    "dimensionalFormula": "kg/(A·s²) or M·T⁻²·I⁻¹",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor an eccentric Serbian-American inventor who championed polyphase alternating current (AC), patented the induction motor, and built a wireless tower at Wardenclyffe."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is kg·s⁻²·A⁻¹ (or Newton per Ampere-meter, N/(A·m)). One of me is equal to one Weber per square meter."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Earth's ambient geomagnetic field is tiny (about 30 to 50 micro-units). A typical supermarket refrigerator magnet is about 0.005 of me, while a medical hospital MRI scanner operates at 1.5 to 3 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Pop-Culture / Automotive",
+        "text": "🚗 Apart from being the SI unit of magnetic flux density, Elon Musk borrowed this surname for the most famous electric vehicle manufacturer on Earth."
+      }
+    ],
+    "explanation": "Named after Nikola Tesla. One Tesla equals one weber per square meter (Wb/m²). MRI machines typically operate at 1.5T or 3T.",
+    "reverseDetective": {
+      "quantityName": "Magnetic Flux Density / B-Field",
+      "scientist": "Nikola Tesla",
+      "realWorldExamples": ["1.5T/3T Hospital MRI", "Earth's magnetic field (~50 uT)", "Neodymium magnet (~1.2T)"],
+      "keywords": ["tesla", "mri", "magnetic field", "induction", "weber per square meter"]
+    }
+  },
+  {
+    "id": 9,
+    "quantity": "Electric Charge",
+    "unit": "Coulomb",
+    "symbol": "C",
+    "aliases": ["coulomb", "coulombs", "c", "charge"],
+    "dimensionalFormula": "A·s or I·T",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I am named after a French military engineer who used an ultra-sensitive torsion balance to discover that the electrostatic attraction or repulsion between charges obeys an inverse-square law."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "In SI base units, my dimensional formula is simply Ampere × second (A·s). I am the quantity of electricity carried in 1 second by a steady current of 1 Ampere."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Subatomic Scale",
+        "text": "A single fundamental electron carries an elementary charge of approximately -1.602 × 10⁻¹⁹ of me. Therefore, 1 of me corresponds to a bundle of roughly 6.24 × 10¹⁸ electrons."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Law",
+        "text": "F = k · (|q₁ · q₂|) / r². When you rub a balloon against wool hair and it sticks to a wall, you've separated micro-fractions of this unit."
+      }
+    ],
+    "explanation": "Named after Charles-Augustin de Coulomb. 1 Coulomb is the quantity of electric charge transported by a current of 1 ampere in 1 second (1 C = 1 A·s).",
+    "reverseDetective": {
+      "quantityName": "Electric Charge",
+      "scientist": "Charles-Augustin de Coulomb",
+      "realWorldExamples": ["Electron charge (-1.6x10^-19 C)", "Lightning strike (15-350 C)", "Smartphone battery (e.g. 4000mAh = 14,400 C)"],
+      "keywords": ["coulomb", "charge", "torsion balance", "ampere-second", "electron"]
+    }
+  },
+  {
+    "id": 10,
+    "quantity": "Thermodynamic Temperature",
+    "unit": "Kelvin",
+    "symbol": "K",
+    "aliases": ["kelvin", "kelvins", "k", "temperature"],
+    "dimensionalFormula": "Θ or K (SI Base Unit)",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor the Belfast-born Scottish mathematical physicist (William Thomson) who formulated the absolute thermodynamic temperature scale and laid the transatlantic telegraph cable."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition",
+        "text": "I am one of the 7 fundamental SI base units. My scale has no negative numbers; zero on my scale is Absolute Zero, where particle thermal kinetic energy reaches its minimum."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Water freezes at 273.15 of me and boils at 373.15 of me. Photography lighting bulbs specify warm vs cool white light (e.g. 2700 for cozy warm, 6500 for daylight) using me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Trivia / Syntax Trap",
+        "text": "Do NOT write a degree symbol (°) next to me! Writing '°K' is a notorious scientific sin. The cosmic microwave background radiation of deep space is 2.7 of me."
+      }
+    ],
+    "explanation": "Named after Lord Kelvin (William Thomson). Absolute zero is 0 K (-273.15 °C). Note that the unit is 'Kelvin', not 'degrees Kelvin'.",
+    "reverseDetective": {
+      "quantityName": "Thermodynamic Temperature",
+      "scientist": "Lord Kelvin (William Thomson)",
+      "realWorldExamples": ["Absolute Zero (0 K)", "Water freezing (273.15 K)", "Sun surface (~5,778 K)", "Room temp (~293 K)"],
+      "keywords": ["kelvin", "absolute zero", "temperature", "william thomson", "celsius offset"]
+    }
+  },
+  {
+    "id": 11,
+    "quantity": "Electrical Capacitance",
+    "unit": "Farad",
+    "symbol": "F",
+    "aliases": ["farad", "farads", "f", "capacitance"],
+    "dimensionalFormula": "s⁴·A²/(kg·m²) or M⁻¹·L⁻²·T⁴·I²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor the self-taught English bookbinder's apprentice who discovered electromagnetic induction, invented the Bunsen burner concept, and introduced terms like 'ion' and 'electrode'."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is s⁴·A²·m⁻²·kg⁻¹ (or Coulomb per Volt, C/V). I measure the ability of a dual-plate component to store electrostatic charge per unit voltage."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Scale",
+        "text": "One whole unit of me is enormous! If planet Earth were an isolated conducting sphere in space, its self-capacitance would only be about 710 micro-units of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Circuit Diagram",
+        "text": "In electronics, you see me prefixed as micro (µF), nano (nF), or pico (pF) on cylindrical aluminum electrolyte cans and ceramic disc capacitors marked —||—."
+      }
+    ],
+    "explanation": "Named after Michael Faraday. 1 Farad is the capacitance of a capacitor between whose plates there appears a potential difference of 1 volt when it is charged by 1 coulomb.",
+    "reverseDetective": {
+      "quantityName": "Capacitance",
+      "scientist": "Michael Faraday",
+      "realWorldExamples": ["Ceramic capacitor (100 nF)", "Supercapacitor (50 F)", "Earth self-capacitance (~710 uF)"],
+      "keywords": ["faraday", "capacitance", "capacitor", "charge storage", "coulomb per volt"]
+    }
+  },
+  {
+    "id": 12,
+    "quantity": "Electrical Inductance",
+    "unit": "Henry",
+    "symbol": "H",
+    "aliases": ["henry", "henries", "h", "inductance"],
+    "dimensionalFormula": "kg·m²/(A²·s²) or M·L²·T⁻²·I⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor an American scientist who independently discovered electromagnetic induction in Albany, New York, and served as the first Secretary of the Smithsonian Institution."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is kg·m²·s⁻²·A⁻² (or Volt-second per Ampere, V·s/A, or Weber per Ampere). I quantify the electromotive force induced when electric current changes."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Wire-wound copper chokes in PC power supplies, guitar pickups, and anti-theft security gates at store exits utilize coils measuring in milli-units of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Formula / Symbol",
+        "text": "V = L (di/dt). In electronics schematics, I am represented by looped coiling wire bumps, denoted by the letter L, and my unit name sounds like a common English royal first name."
+      }
+    ],
+    "explanation": "Named after Joseph Henry. One henry is the inductance of a closed circuit in which an electromotive force of 1 volt is produced when the electric current changes at 1 A/s.",
+    "reverseDetective": {
+      "quantityName": "Inductance",
+      "scientist": "Joseph Henry",
+      "realWorldExamples": ["Guitar pickups (3-6 H)", "Switch-mode power inductor (100 uH)", "Ferrite bead choke"],
+      "keywords": ["henry", "inductor", "copper coil", "electromagnetic induction", "weber per ampere"]
+    }
+  },
+  {
+    "id": 13,
+    "quantity": "Radioactivity (Decay Rate)",
+    "unit": "Becquerel",
+    "symbol": "Bq",
+    "aliases": ["becquerel", "becquerels", "bq", "radioactivity"],
+    "dimensionalFormula": "s⁻¹ or T⁻¹",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a French physicist who in 1896 placed uranium salts inside a dark wooden desk drawer on top of unexposed photographic plates, accidentally discovering spontaneous radioactivity."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "Like the Hertz, my dimension is mathematically s⁻¹ (1/second), but I am strictly reserved for nuclear physics: defined as exactly 1 nuclear transformation or spontaneous disintegration per second."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "An ordinary fresh banana emits about 15 of me every single second due to natural radioactive decay of its Potassium-40 isotope."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Trivia / Geiger Counter",
+        "text": "☢️ I replaced the older non-SI unit, the Curie (Ci), where 1 Curie = 3.7 × 10¹⁰ of me. Geiger-Müller counter clicks are directly tracking events in this unit."
+      }
+    ],
+    "explanation": "Named after Henri Becquerel, who shared the 1903 Nobel Prize in Physics with Pierre and Marie Curie. 1 Bq = 1 decay per second.",
+    "reverseDetective": {
+      "quantityName": "Radioactivity / Nuclear Activity",
+      "scientist": "Henri Becquerel",
+      "realWorldExamples": ["Banana potassium-40 (~15 Bq)", "Human body (~4400 Bq)", "Smoke detector americium (~30 kBq)"],
+      "keywords": ["becquerel", "radioactivity", "uranium", "decay per second", "curie"]
+    }
+  },
+  {
+    "id": 14,
+    "quantity": "Luminous Intensity",
+    "unit": "Candela",
+    "symbol": "cd",
+    "aliases": ["candela", "candelas", "cd", "luminous intensity"],
+    "dimensionalFormula": "J or cd (SI Base Unit)",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Etymology",
+        "text": "My name is the direct Latin word for a wax taper stick or lighting cylinder that people have burned for illumination since ancient Roman times."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition",
+        "text": "I am one of the 7 fundamental SI base units. Specifically, I quantify the luminous intensity of monochromatic green-yellow radiation of frequency 540 × 10¹² Hz."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A standard wax birthday candle emits light with an intensity of almost exactly 1 of me in all horizontal directions."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Symbol",
+        "text": "🕯️ My two-letter symbol is 'cd'. Car headlight beams produce thousands of me, and lighthouse searchlights reach millions of me."
+      }
+    ],
+    "explanation": "The candela (cd) is the SI base unit of luminous intensity in a given direction. Historically based on the light emitted by a standard candle.",
+    "reverseDetective": {
+      "quantityName": "Luminous Intensity",
+      "scientist": "Derived from standard candle definition (CIE)",
+      "realWorldExamples": ["Standard wax candle (1 cd)", "Smartphone flashlight (~10-50 cd)", "Car high beam (~100,000 cd)"],
+      "keywords": ["candela", "candle", "light intensity", "lumen per steradian", "photometry"]
+    }
+  },
+  {
+    "id": 15,
+    "quantity": "Amount of Substance",
+    "unit": "Mole",
+    "symbol": "mol",
+    "aliases": ["mole", "moles", "mol", "amount of substance"],
+    "dimensionalFormula": "N or mol (SI Base Unit)",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "German chemist Wilhelm Ostwald coined my name in 1894 from the Latin word 'moles' meaning a large mass or heap, connecting microscopic atoms to bulk macroscopic chemistry."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Constant",
+        "text": "I am one of the 7 SI base units. Since the 2019 redefinition, 1 of me contains exactly 6.02214076 × 10²³ elementary entities (Avogadro's constant)."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "One of me in pure water weighs approximately 18.015 grams, which fits comfortably inside a single tablespoon."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Meme / Wordplay",
+        "text": "🐾 Chemistry students worldwide celebrate my unofficial international holiday on October 23rd from 6:02 AM to 6:02 PM. I share my name with a burrowing blind garden mammal!"
+      }
+    ],
+    "explanation": "The mole (mol) is the SI base unit for amount of substance. 1 mole contains Avogadro's number (6.022×10²³) of particles.",
+    "reverseDetective": {
+      "quantityName": "Amount of Substance",
+      "scientist": "Amedeo Avogadro / Wilhelm Ostwald",
+      "realWorldExamples": ["18g of water (1 mol)", "12g of Carbon-12 (1 mol)", "Avogadro's number (6.022x10^23)"],
+      "keywords": ["mole", "avogadro", "amount of substance", "6.022x10^23", "molar mass"]
+    }
+  },
+  {
+    "id": 16,
+    "quantity": "Magnetic Flux",
+    "unit": "Weber",
+    "symbol": "Wb",
+    "aliases": ["weber", "webers", "wb", "magnetic flux"],
+    "dimensionalFormula": "kg·m²/(A·s²) or M·L²·T⁻²·I⁻¹",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a German physicist who collaborated with Carl Friedrich Gauss at Göttingen to build the first electromagnetic telegraph in 1833 and map geomagnetic fields."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "My dimensional formula is kg·m²·s⁻²·A⁻¹ (or Volt-seconds, V·s, or Joule per Ampere). I measure the total quantity of magnetic field lines passing through a given surface area."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Relation to Tesla",
+        "text": "If a uniform magnetic field of 1 Tesla passes perpendicularly through an area of 1 square meter, the resulting flux is exactly 1 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Symbol",
+        "text": "Φ = B · A · cos(θ). My symbol is 'Wb', and when my value through an electric circuit loop changes over time, Faraday's Law dictates that a voltage is born."
+      }
+    ],
+    "explanation": "Named after Wilhelm Eduard Weber. 1 Weber is the magnetic flux that, linking a circuit of one turn, produces in it an electromotive force of 1 volt as it is reduced to zero at a uniform rate in 1 second.",
+    "reverseDetective": {
+      "quantityName": "Magnetic Flux",
+      "scientist": "Wilhelm Eduard Weber",
+      "realWorldExamples": ["Flux through motor core", "1 Tesla over 1 m² = 1 Wb", "Faraday induction loops"],
+      "keywords": ["weber", "magnetic flux", "tesla meter squared", "volt-second", "wilhelm weber"]
+    }
+  },
+  {
+    "id": 17,
+    "quantity": "Illuminance / Luminous Emittance",
+    "unit": "Lux",
+    "symbol": "lx",
+    "aliases": ["lux", "lx", "illuminance", "illumination"],
+    "dimensionalFormula": "cd·sr/m² or lm/m²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Etymology & Concept",
+        "text": "My name is borrowed straight from the Latin noun for 'light'. In the Bible's Latin Vulgate translation of Genesis, God commands: 'Fiat ___' ('Let there be light')."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "I am defined as 1 lumen of luminous flux uniformly distributed over an area of 1 square meter (1 lm/m²)."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Direct bright summer sunlight delivers about 100,000 of me. An ordinary well-lit college classroom or office library requires 300 to 500 of me, while a full moon on a clear night provides just 0.25 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Phone Sensor / Film",
+        "text": "📱 The ambient light sensor on your smartphone display uses a meter calibrated in me to automatically dim or brighten your screen depending on room lighting."
+      }
+    ],
+    "explanation": "The lux (lx) is the SI derived unit of illuminance, measuring luminous flux per unit area (1 lx = 1 lm/m²).",
+    "reverseDetective": {
+      "quantityName": "Illuminance / Light Level",
+      "scientist": "Latin root for light (CIE standard)",
+      "realWorldExamples": ["Direct sunlight (100,000 lx)", "Office workspace (500 lx)", "Full moonlight (0.25 lx)"],
+      "keywords": ["lux", "illuminance", "lumen per square meter", "light meter", "ambient sensor"]
+    }
+  },
+  {
+    "id": 18,
+    "quantity": "Radiation Equivalent Dose",
+    "unit": "Sievert",
+    "symbol": "Sv",
+    "aliases": ["sievert", "sieverts", "sv", "equivalent dose"],
+    "dimensionalFormula": "m²/s² or L²·T⁻²",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a Swedish medical physicist who pioneered radiation protection at Stockholm's Radiumhemmet and served as chairman of the International Commission on Radiological Protection."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Dimensions",
+        "text": "Like the Gray, my physical dimension is Joule per kilogram (J/kg = m²·s⁻²), but I incorporate biological weighting factors (Wr) to represent stochastic health hazard on living human biological tissue."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "Eating a single potassium-rich banana delivers 0.1 micro-units of me. A routine chest X-ray gives about 0.1 milli-units of me. A sudden acute whole-body dose of 4 to 5 full units of me is lethal to 50% of humans."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Pop-Culture / HBO",
+        "text": "☢️ In the HBO miniseries 'Chernobyl', dosimeters reading out in milli-units of me reveal the catastrophic radiation invisible to the human eye."
+      }
+    ],
+    "explanation": "Named after Rolf Maximilian Sievert. 1 Sievert represents the biological effect of ionizing radiation (1 Sv = 1 J/kg multiplied by biological quality factors).",
+    "reverseDetective": {
+      "quantityName": "Equivalent Radiation Dose",
+      "scientist": "Rolf Maximilian Sievert",
+      "realWorldExamples": ["Chest X-ray (0.1 mSv)", "Banana dose (0.1 uSv)", "Lethal acute dose (~4-5 Sv)", "Yearly background dose (~2.4 mSv)"],
+      "keywords": ["sievert", "radiation dose", "ionizing radiation", "biological damage", "rem"]
+    }
+  },
+  {
+    "id": 19,
+    "quantity": "Electric Current",
+    "unit": "Ampere",
+    "symbol": "A",
+    "aliases": ["ampere", "amperes", "amp", "amps", "a", "current"],
+    "dimensionalFormula": "I or A (SI Base Unit)",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor a French genius whom James Clerk Maxwell called the 'Newton of electricity' for discovering that two parallel straight wires carrying electric currents attract each other."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "SI Definition & Constant",
+        "text": "I am one of the 7 foundational SI base units. Since 2019, 1 of me corresponds to the flow of exactly 1/(1.602176634 × 10⁻¹⁹) elementary charges per second (1 Coulomb per second)."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A standard USB-C fast charging cable carries 3 of me at 20 Volts (delivering 60 Watts). A residential kitchen electric breaker trips when current exceeds 15 or 20 of me."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Colloquial Shortening / Rock Band",
+        "text": "🎸 Guitarists plug their electric guitars into giant stage sound amplifiers called '____s'. What unit gives them their name?"
+      }
+    ],
+    "explanation": "Named after André-Marie Ampère. 1 Ampere is the constant current transferring 1 coulomb of charge per second.",
+    "reverseDetective": {
+      "quantityName": "Electric Current",
+      "scientist": "André-Marie Ampère",
+      "realWorldExamples": ["Phone fast charger (3A)", "Household breaker (15A/20A)", "Lightning bolt (~30,000A)", "Guitar amplifier"],
+      "keywords": ["ampere", "current", "andre-marie", "coulomb per second", "amps"]
+    }
+  },
+  {
+    "id": 20,
+    "quantity": "Sound Pressure / Signal Power Ratio",
+    "unit": "Decibel",
+    "symbol": "dB",
+    "aliases": ["decibel", "decibels", "db", "sound level"],
+    "dimensionalFormula": "Dimensionless (Logarithmic Ratio)",
+    "clues": [
+      {
+        "level": 1,
+        "points": 100,
+        "type": "Historical / Scientist",
+        "text": "I honor Alexander Graham Bell, the Scottish-born inventor of the telephone and co-founder of AT&T, combined with the metric prefix for one-tenth."
+      },
+      {
+        "level": 2,
+        "points": 75,
+        "type": "Mathematical Definition",
+        "text": "I am strictly dimensionless! Rather than measuring a linear quantity directly, I am a logarithmic scale: an increase of 10 of me means ten times the power (10 log₁₀(P/P₀))."
+      },
+      {
+        "level": 3,
+        "points": 50,
+        "type": "Real-World Everyday",
+        "text": "A quiet library whisper is about 30 of me. Normal conversational speech is 60 of me. A rock concert or jet engine takeoff can exceed 120 of me, entering the human threshold of acute pain."
+      },
+      {
+        "level": 4,
+        "points": 25,
+        "type": "Visual / Symbol",
+        "text": "🔊 My abbreviation is a lowercase 'd' followed by a capital 'B': 'dB'. Sound level meters in recording studios display needles calibrated to me."
+      }
+    ],
+    "explanation": "Named in honor of Alexander Graham Bell (deci- + Bel). The decibel is a logarithmic unit used to express the ratio of two values of a physical quantity, typically sound or power.",
+    "reverseDetective": {
+      "quantityName": "Sound Intensity / Power Ratio",
+      "scientist": "Alexander Graham Bell",
+      "realWorldExamples": ["Whisper (30 dB)", "Conversation (60 dB)", "Jet engine (130 dB)", "Rock concert (115 dB)"],
+      "keywords": ["decibel", "bell", "logarithmic", "sound level", "db"]
+    }
+  }
+]
