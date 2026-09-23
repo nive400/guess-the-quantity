@@ -1,3 +1,4 @@
+const fs = require('fs');
 const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
@@ -15,15 +16,33 @@ const io = new Server(server, {
 });
 
 const PORT = process.env.PORT || 3000;
+const DATA_FILE = path.join(__dirname, 'data', 'leaderboard.json');
 
 app.use(cors());
-app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json({ limit: '1mb' }));
+app.use(express.static(path.join(__dirname, 'public'), { etag: true, maxAge: '1h' }));
 
-// In-memory state for college event
-// players: array of { id, name, score, totalTimeSec, completedAt, timestamp }
+// Persistent state for college event (supporting 50+ simultaneous contestants)
 let leaderboard = [];
 let activeConnections = 0;
+
+// Load persisted leaderboard from disk if present
+try {
+  if (fs.existsSync(DATA_FILE)) {
+    const raw = fs.readFileSync(DATA_FILE, 'utf8');
+    leaderboard = JSON.parse(raw) || [];
+  }
+} catch (e) {
+  leaderboard = [];
+}
+
+function saveLeaderboard() {
+  try {
+    fs.writeFileSync(DATA_FILE, JSON.stringify(leaderboard, null, 2), 'utf8');
+  } catch (e) {
+    console.error('Error saving leaderboard.json:', e.message);
+  }
+}
 
 function sortLeaderboard() {
   leaderboard.sort((a, b) => {
@@ -88,19 +107,20 @@ app.post('/api/admin-verify', (req, res) => {
   res.status(403).json({ valid: false, error: 'Invalid admin passcode' });
 });
 
-// Participant Score Submission (open to all, does not leak full leaderboard)
+// Participant Score Submission (open to all 50+ participants, records all entries)
 app.post('/api/score', (req, res) => {
   const { name, score, totalTimeSec, playerId } = req.body;
   if (!name || score === undefined) {
     return res.status(400).json({ error: 'Name and score are required' });
   }
 
-  const id = playerId || ('player_' + Math.random().toString(36).substring(2, 9));
+  // Ensure persistent unique player ID
+  const id = (playerId && String(playerId).trim()) || ('player_' + Math.random().toString(36).substring(2, 9));
   const existingIdx = leaderboard.findIndex(p => p.id === id);
 
   const playerData = {
     id,
-    name: name.trim().substring(0, 30),
+    name: name.trim().substring(0, 40),
     score: Number(score) || 0,
     totalTimeSec: Number(totalTimeSec) || 0,
     completedAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
@@ -108,7 +128,7 @@ app.post('/api/score', (req, res) => {
   };
 
   if (existingIdx !== -1) {
-    // Only update if higher score, or equal score with faster time
+    // Retain the player's best score (or faster time for tie)
     if (playerData.score > leaderboard[existingIdx].score ||
         (playerData.score === leaderboard[existingIdx].score && playerData.totalTimeSec < leaderboard[existingIdx].totalTimeSec)) {
       leaderboard[existingIdx] = playerData;
@@ -117,11 +137,34 @@ app.post('/api/score', (req, res) => {
     leaderboard.push(playerData);
   }
 
+  // Persist immediately to disk so Render restarts don't lose data
+  saveLeaderboard();
+
   const ranked = getRankedLeaderboard();
-  // Broadcast update ONLY to admin room sockets
+  // Broadcast update live to admin room sockets
   io.to('admin_room').emit('leaderboard_update', ranked);
 
-  res.json({ success: true, rank: ranked.find(p => p.id === id)?.rank || 1 });
+  res.json({
+    success: true,
+    rank: ranked.find(p => p.id === id)?.rank || 1,
+    totalParticipants: ranked.length
+  });
+});
+
+// Admin-Only CSV Export for 50+ members
+app.get('/api/export-csv', (req, res) => {
+  if (!checkAdminAuth(req)) {
+    return res.status(403).send('Admin access required');
+  }
+  const ranked = getRankedLeaderboard();
+  let csv = 'Rank,Player Name,Score (Max 1500),Time Taken (Seconds),Submitted At\n';
+  ranked.forEach(p => {
+    const cleanName = (p.name || '').replace(/"/g, '""');
+    csv += `${p.rank},"${cleanName}",${p.score},${p.totalTimeSec},"${p.completedAt}"\n`;
+  });
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="guess_the_quantity_leaderboard.csv"');
+  res.send(csv);
 });
 
 // Admin-Only Reset
@@ -130,6 +173,7 @@ app.post('/api/reset-leaderboard', (req, res) => {
     return res.status(403).json({ error: 'Admin access required to reset leaderboard' });
   }
   leaderboard = [];
+  saveLeaderboard();
   io.to('admin_room').emit('leaderboard_update', []);
   res.json({ success: true, message: 'Leaderboard reset successfully' });
 });

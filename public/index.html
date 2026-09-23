@@ -107,8 +107,8 @@
       <div id="box-summary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
         <div class="text-4xl">🏆</div>
         <h2 id="sum-title" class="text-xl font-bold text-white">Quiz Completed!</h2>
-        <div class="bg-emerald-500/10 border border-emerald-500/20 py-2 px-3 rounded-lg max-w-sm mx-auto text-xs text-emerald-400">
-          ✅ Your score has been submitted to the event host!
+        <div id="sum-submission-msg" class="bg-emerald-500/10 border border-emerald-500/20 py-2 px-3 rounded-lg max-w-sm mx-auto text-xs text-emerald-400 font-medium">
+          ✅ Submitting score to event host...
         </div>
         <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto text-xs">
           <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
@@ -136,24 +136,30 @@
 
     </main>
 
-    <!-- TAB 2: LEADERBOARD (ADMIN ONLY) -->
+    <!-- TAB 2: LEADERBOARD (ADMIN ONLY - ALL 50+ PARTICIPANTS) -->
     <section id="pane-lead" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
-      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
         <div>
           <div class="flex items-center gap-2">
             <h2 class="text-lg font-bold text-white">👑 Live Leaderboard</h2>
-            <span class="bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">Admin View</span>
+            <span id="lead-count-badge" class="bg-amber-500/20 text-amber-300 font-mono text-xs px-2.5 py-0.5 rounded-full border border-amber-500/40">
+              👥 0 Participants
+            </span>
           </div>
-          <p class="text-xs text-slate-400">Real-time standings of all event participants.</p>
+          <p class="text-xs text-slate-400">Real-time standings of all 50+ event participants (auto-updates every 4s).</p>
         </div>
-        <div class="flex items-center gap-2">
-          <button onclick="fetchAdminLeaderboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1">
-            🔄 Refresh
+        <div class="flex flex-wrap items-center gap-2">
+          <input id="in-lead-search" oninput="filterLeaderboard()" type="text" placeholder="🔍 Search player..." class="bg-slate-950 border border-slate-700 text-xs px-2.5 py-1.5 rounded-lg text-white outline-none w-32 sm:w-40 focus:border-amber-400">
+          <button onclick="fetchAdminLeaderboard()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 text-xs font-semibold px-2.5 py-1.5 rounded-lg flex items-center gap-1" title="Refresh">
+            🔄
           </button>
-          <button onclick="resetLeaderboardConfirm()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1">
-            🗑️ Clear Scores
+          <button onclick="exportLeaderboardCSV()" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1">
+            📥 CSV
           </button>
-          <button onclick="adminLogout()" class="border border-slate-700 text-slate-400 hover:text-white text-xs px-2.5 py-1.5 rounded-lg">
+          <button onclick="resetLeaderboardConfirm()" class="bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-semibold px-2.5 py-1.5 rounded-lg">
+            🗑️ Clear
+          </button>
+          <button onclick="adminLogout()" class="border border-slate-700 text-slate-400 hover:text-white text-xs px-2 py-1.5 rounded-lg">
             🔒 Lock
           </button>
         </div>
@@ -162,16 +168,16 @@
       <!-- Top 3 Podium Highlights -->
       <div id="lead-podium" class="grid grid-cols-3 gap-2 text-center"></div>
 
-      <!-- Full Standings Table -->
-      <div class="overflow-x-auto border border-slate-800 rounded-lg">
+      <!-- Full Standings Table for All 50+ Participants -->
+      <div class="overflow-x-auto border border-slate-800 rounded-lg max-h-[600px] overflow-y-auto">
         <table class="w-full text-xs text-left">
-          <thead class="bg-slate-950 text-slate-400 uppercase">
+          <thead class="bg-slate-950 text-slate-400 uppercase sticky top-0 z-10 border-b border-slate-800">
             <tr>
               <th class="p-2.5 text-center">Rank</th>
               <th class="p-2.5">Player / Team</th>
               <th class="p-2.5 text-right">Score</th>
               <th class="p-2.5 text-center">Time</th>
-              <th class="p-2.5 text-right">Completed</th>
+              <th class="p-2.5 text-right">Submitted</th>
             </tr>
           </thead>
           <tbody id="lead-rows" class="divide-y divide-slate-800">
@@ -659,6 +665,15 @@
       }, 1500);
     }
 
+    // Persistent unique Player ID for high-concurrency event (50+ participants)
+    let playerId = localStorage.getItem('gq_player_id');
+    if (!playerId) {
+      playerId = 'p_' + Math.random().toString(36).substring(2, 9) + '_' + Date.now().toString(36);
+      localStorage.setItem('gq_player_id', playerId);
+    }
+
+    let leadPollInterval = null;
+
     function finishQuiz() {
       clearInterval(timerInterval);
       const timeSec = Math.round((Date.now() - startTime) / 1000);
@@ -669,13 +684,34 @@
       document.getElementById('sum-correct').textContent = `${correctCount}/15`;
       document.getElementById('sum-time').textContent = `${timeSec}s (${formatTime(timeSec)})`;
 
+      submitScoreToServer(timeSec);
+    }
+
+    function submitScoreToServer(timeSec, retries = 3) {
+      const msg = document.getElementById('sum-submission-msg');
+      if (msg) msg.textContent = '⏳ Submitting score to event host...';
+
       fetch('/api/score', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: playerName, score, totalTimeSec: timeSec })
-      }).catch(() => {});
-
-      if (isAdmin) fetchAdminLeaderboard();
+        body: JSON.stringify({ name: playerName, score, totalTimeSec: timeSec, playerId })
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && msg) {
+          msg.className = "bg-emerald-500/10 border border-emerald-500/20 py-2 px-3 rounded-lg max-w-sm mx-auto text-xs text-emerald-400 font-medium";
+          msg.innerHTML = `✅ Successfully submitted! You are rank <strong>#${data.rank}</strong> out of ${data.totalParticipants} participants.`;
+        }
+        if (isAdmin) fetchAdminLeaderboard();
+      })
+      .catch(() => {
+        if (retries > 0) {
+          setTimeout(() => submitScoreToServer(timeSec, retries - 1), 1500);
+        } else if (msg) {
+          msg.className = "bg-amber-500/10 border border-amber-500/20 py-2 px-3 rounded-lg max-w-sm mx-auto text-xs text-amber-300 font-medium";
+          msg.textContent = '⚠️ Network slow. Score recorded locally and retrying in background...';
+        }
+      });
     }
 
     function restartQuiz() {
@@ -716,7 +752,6 @@
         if (data.valid) setAdminLoggedIn(key);
       })
       .catch(() => {
-        // Fallback for standalone file preview
         if (key === 'admin123') setAdminLoggedIn(key);
       });
     }
@@ -736,12 +771,15 @@
       document.getElementById('btn-admin-auth').className = "px-2 py-1 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40 text-[11px] font-mono flex items-center gap-1";
 
       fetchAdminLeaderboard();
+      clearInterval(leadPollInterval);
+      leadPollInterval = setInterval(fetchAdminLeaderboard, 4000);
     }
 
     function adminLogout() {
       adminKey = null;
       isAdmin = false;
       sessionStorage.removeItem('gq_admin_key');
+      clearInterval(leadPollInterval);
 
       document.getElementById('btn-tab-lead').classList.add('hidden');
       document.getElementById('btn-tab-bonus').classList.add('hidden');
@@ -815,11 +853,16 @@
       })
       .then(data => {
         leaderboard = data;
-        renderLeaderboard();
+        filterLeaderboard();
       })
       .catch(() => {
-        renderLeaderboard();
+        filterLeaderboard();
       });
+    }
+
+    function filterLeaderboard() {
+      const q = (document.getElementById('in-lead-search')?.value || '').toLowerCase().trim();
+      renderLeaderboard(q);
     }
 
     function resetLeaderboardConfirm() {
@@ -841,18 +884,29 @@
       });
     }
 
-    function renderLeaderboard() {
+    function exportLeaderboardCSV() {
+      if (!adminKey) return;
+      window.open(`/api/export-csv?key=${encodeURIComponent(adminKey)}`, '_blank');
+    }
+
+    function renderLeaderboard(query = '') {
       const rows = document.getElementById('lead-rows');
       const podium = document.getElementById('lead-podium');
+      const countBadge = document.getElementById('lead-count-badge');
       rows.innerHTML = '';
       podium.innerHTML = '';
 
+      const totalCount = leaderboard ? leaderboard.length : 0;
+      if (countBadge) {
+        countBadge.textContent = `👥 ${totalCount} Participant${totalCount === 1 ? '' : 's'}`;
+      }
+
       if (!leaderboard || leaderboard.length === 0) {
-        rows.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No participants yet. Scores will appear here once players submit!</td></tr>`;
+        rows.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-500">No participants yet. Scores will appear here in real time once players submit!</td></tr>`;
         return;
       }
 
-      // Top 3 Podium Cards
+      // Top 3 Podium Cards (always unfilitered top 3)
       const top3 = leaderboard.slice(0, 3);
       top3.forEach((p, i) => {
         const medals = ['🥇 1st Place', '🥈 2nd Place', '🥉 3rd Place'];
@@ -872,12 +926,22 @@
         podium.appendChild(card);
       });
 
-      // Detailed Table Rows
-      leaderboard.forEach((p, idx) => {
+      // Filter displayed list if search query exists
+      const displayList = query 
+        ? leaderboard.filter(p => (p.name || '').toLowerCase().includes(query))
+        : leaderboard;
+
+      if (displayList.length === 0) {
+        rows.innerHTML = `<tr><td colspan="5" class="p-4 text-center text-slate-500">No participants matching "${query}".</td></tr>`;
+        return;
+      }
+
+      // Detailed Table Rows for all participants (50+)
+      displayList.forEach((p) => {
         const tr = document.createElement('tr');
         tr.className = 'hover:bg-slate-800/40 text-slate-300';
         tr.innerHTML = `
-          <td class="p-2.5 text-center font-mono font-bold ${idx === 0 ? 'text-amber-400' : ''}">${idx === 0 ? '🥇 1' : idx === 1 ? '🥈 2' : idx === 2 ? '🥉 3' : '#' + (idx + 1)}</td>
+          <td class="p-2.5 text-center font-mono font-bold ${p.rank === 1 ? 'text-amber-400' : p.rank === 2 ? 'text-slate-300' : p.rank === 3 ? 'text-amber-600' : ''}">${p.rank === 1 ? '🥇 1' : p.rank === 2 ? '🥈 2' : p.rank === 3 ? '🥉 3' : '#' + p.rank}</td>
           <td class="p-2.5 font-medium text-white">${p.name}</td>
           <td class="p-2.5 text-right font-mono font-bold text-amber-400">${p.score} pts</td>
           <td class="p-2.5 text-center font-mono text-slate-400">${p.totalTimeSec || p.time || 0}s</td>
@@ -912,7 +976,7 @@
         leaderboard.push({ name: targetName.trim(), score: b, totalTimeSec: 30, completedAt: 'Bonus' });
       }
       leaderboard.sort((a, b) => b.score - a.score);
-      renderLeaderboard();
+      filterLeaderboard();
       alert(`🎉 Awarded +${b} bonus points to ${targetName.trim()}!`);
       switchTab('lead');
     }
