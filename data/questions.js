@@ -1,5 +1,5 @@
 // 10 Physical Quantities & SI Units for "Guess the Quantity"
-// Tuned for 1st-year college students: accessible, engaging, and clear!
+// Engaging, riddle-style, and thrilling clues tailored for a high-energy college event!
 
 const questions = [
   {
@@ -13,33 +13,33 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: f = 1 / T. My SI unit is simply 1/second (s⁻¹). I measure how many complete waves, cycles, or vibrations occur every single second."
+        type: "Math & Quantum",
+        badge: "🔢 Clue 1 · The Quantum Signature (100 pts)",
+        text: "In quantum physics, multiply me by Planck's constant (E = h·ν) to calculate the energy of a light photon. My SI dimensional formula is deceptively simple: exactly 1/second (s⁻¹)."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Imagine a vibrating guitar string, ripples spreading across water, or a sine wave plotted on an oscilloscope."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Oscillation (75 pts)",
+        text: "Watch a vibrating guitar string blur under stage lights, or an ECG heart monitor beep on a screen. I count how many peaks, ripples, or complete cycles rush past in a single second."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Modern smartphone displays refresh at 60 or 120 of me. Home Wi-Fi routers broadcast at 2.4 or 5 Giga-____, and human hearing ranges from 20 to 20,000 of me."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Gamers & Gadgets (50 pts)",
+        text: "Gamers obsess over 144 or 240 of me for ultra-smooth monitor refresh rates. Your home Wi-Fi oscillates at billions of me (2.4 or 5 Giga-____), and human ears can only hear me up to 20,000."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after German physicist Heinrich Hertz, who proved radio waves exist in 1887. (Dad joke: What unit hurts when you stub your toe?)"
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Scientist & Pun (25 pts)",
+        text: "I honor Heinrich Hertz, who first detected radio waves in 1887. (College dad joke: What SI unit does your pinky toe experience when you stub it on the bedpost? Ouch, that really ____!)"
       }
     ],
-    explanation: "Frequency measures how many cycles happen per second. Its SI unit is the Hertz (Hz = 1/s), named after Heinrich Hertz."
+    explanation: "Frequency measures repeating cycles per second. Its SI unit is the Hertz (Hz = 1/s), named after Heinrich Hertz."
   },
   {
     id: 2,
@@ -52,30 +52,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Q = I × t (Current × Time). In base SI units, I equal 1 Ampere-second (A·s). I measure the fundamental quantity of electric charge."
+        type: "Math & Integral",
+        badge: "🔢 Clue 1 · Current Over Time (100 pts)",
+        text: "In circuit theory, integrate electric current over time: Q = ∫ I dt. My fundamental SI dimensional formula is Ampere × second (A·s). I am the true currency of electricity."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Rubbing a balloon on a wool sweater makes it stick to a wall, or two gold leaves diverging in an electroscope due to electrostatic repulsion."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Static Shock (75 pts)",
+        text: "Rub an inflated balloon against your hair and stick it to the ceiling, or walk across a carpet in socks and get a sudden sharp spark on a metal doorknob. That's me accumulating!"
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: A single electron carries a tiny -1.602 × 10⁻¹⁹ of me. A smartphone battery stores roughly 15,000 of me, and a summer lightning bolt delivers about 15 of me."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Electrons & Thunder (50 pts)",
+        text: "A single electron carries a tiny -1.602 × 10⁻¹⁹ of me. A 5,000 mAh smartphone battery holds roughly 18,000 of me, and a summer lightning bolt dumps 15 to 25 of me straight into the ground."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after Charles-Augustin de Coulomb, who discovered that like charges repel and opposite charges attract via the inverse-square law: F = k·(q₁q₂)/r²."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Inverse-Square Law (25 pts)",
+        text: "I am named after French military engineer Charles-Augustin de Coulomb, whose famous 1785 torsion balance proved that like charges repel and opposite charges attract: F = k·(q₁q₂)/r²."
       }
     ],
     explanation: "Electric Charge is the physical property of matter carried by electrons and protons. Its SI unit is the Coulomb (C = A·s)."
@@ -91,30 +91,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Work = Force × Distance (W = F × d). In SI units, I equal 1 Newton-meter (N·m) or 1 Watt-second (W·s)."
+        type: "Math & Physics",
+        badge: "🔢 Clue 1 · Force Across Distance (100 pts)",
+        text: "In classical mechanics: Work = Force × Distance (W = F · d). My SI base dimension is kg·m²/s². In derived units: 1 Newton-meter (N·m) or 1 Watt-second (W·s)."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: A stretched archery bow ready to shoot an arrow, a roller coaster dropping down a hill, or mechanical effort heating up a container of water."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Shape-Shifter (75 pts)",
+        text: "I am the universe's greatest shape-shifter: I lurk as elastic potential in a pulled slingshot, burst into kinetic speed as a baseball flies, and dissipate as friction and heat."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Lifting an average 100-gram apple vertically upwards by exactly 1 meter against Earth's gravity takes about 1 of me. One dietary food Calorie equals about 4,184 of me."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Apples & Snack Packs (50 pts)",
+        text: "Lifting an average 100g apple upwards by 1 meter against Earth's gravity costs roughly 1 of me. Check the nutrition label on a chips packet or chocolate bar: 1 food Calorie contains 4,184 of me!"
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after James Prescott Joule, the English physicist who proved mechanical work converts directly into heat. Every form of energy uses my unit!"
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Brewer Physicist (25 pts)",
+        text: "I honor James Prescott Joule, the English brewer who stirred water with paddle wheels to prove mechanical work converts to heat. (Rhymes with 'Cool' or 'Jewel'—the crowned king of energy!)."
       }
     ],
     explanation: "Energy is the capacity to do work. Its SI unit is the Joule (J = N·m = kg·m²/s²), named after James Prescott Joule."
@@ -130,30 +130,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: C = Q / V (Stored charge per Volt). My SI unit is defined as 1 Coulomb per Volt (C/V)."
+        type: "Math & Ratio",
+        badge: "🔢 Clue 1 · The Charge-Voltage Ratio (100 pts)",
+        text: "Defined by the clean electrostatic ratio: C = Q / V. My SI unit means storing exactly 1 Coulomb of electric charge at a potential difference of 1 Volt (C/V)."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Two parallel metal plates separated by an insulating gap (ceramic, air, or plastic) that temporarily stores electric charge like a miniature electronic reservoir."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Electronic Reservoir (75 pts)",
+        text: "Look inside any electronic gadget for tiny cylindrical aluminum cans standing on two wire legs. Inside is a sandwich of metal sheets separated by a dielectric that acts like a micro-battery."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Found in the cylindrical 'condenser' that gives ceiling fans torque to start spinning, and inside camera flashes. Usually measured in micro-____ (µF)."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Routers & Ceiling Fans (50 pts)",
+        text: "Ever unplug your Wi-Fi router and notice the green light stays on for 3 seconds before dying? That's me discharging! Also, without me inside the ceiling fan 'condenser', the blades won't kickstart."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after Michael Faraday, who discovered electromagnetic induction, invented the electric motor, and created the famous metallic Faraday cage."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Bookbinder's Genius (25 pts)",
+        text: "One whole unit of me is gigantic (we use micro-µF). I am named after Michael Faraday, the self-taught bookbinder who discovered electromagnetic induction and the famous shielding 'Cage'."
       }
     ],
     explanation: "Capacitance is the ability to store electric charge per unit voltage. Its SI unit is the Farad (F = C/V), named after Michael Faraday."
@@ -169,30 +169,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Induced EMF V = -L (dI/dt). My unit equals 1 Volt-second per Ampere (V·s/A) or 1 Weber per Ampere (Wb/A). I oppose sudden changes in current."
+        type: "Math & Back-EMF",
+        badge: "🔢 Clue 1 · The Law of Inertia (100 pts)",
+        text: "Governed by the back-EMF equation: V = -L (dI/dt). In derived SI units: 1 Weber per Ampere (Wb/A) or 1 Volt-second per Ampere (V·s/A). I am electrical inertia personified."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: A neat copper wire wound in a spiral helical coil or solenoid around an iron core, creating a magnetic field when electric current flows."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Stubborn Coil (75 pts)",
+        text: "I look like copper wire tightly wound around a ferrite core or iron nail. Thanks to Lenz's Law, I am stubbornly obstinate: if current tries to surge, I push back; if current drops, I fight to sustain it!"
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Key component in electric guitar pickups, wireless Qi charging pads, AC power adapters, and tube-light choke ballasts. Usually measured in milli-____ (mH)."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Electric Guitars & Wireless Charging (50 pts)",
+        text: "Without me, wireless Qi phone charging pads wouldn't work, electric guitars couldn't convert vibrating steel strings into screaming solos, and tube-light choke ballasts couldn't strike an arc."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after American physicist Joseph Henry, who discovered self-inductance and served as the first Secretary of the Smithsonian Institution."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Smithsonian Pioneer (25 pts)",
+        text: "I honor American physicist Joseph Henry, who discovered electromagnetic self-induction independently and became the first leader of the Smithsonian. (Shares a royal first name with King Henry!)."
       }
     ],
     explanation: "Inductance is the property of an electric conductor that opposes changes in current. Its SI unit is the Henry (H = Wb/A), named after Joseph Henry."
@@ -208,30 +208,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Φ = B × A × cos(θ) (Magnetic Field × Area). In other derived SI units, I equal 1 Tesla-square meter (T·m²) or 1 Volt-second (V·s)."
+        type: "Math & Field Integral",
+        badge: "🔢 Clue 1 · Field Through Surface (100 pts)",
+        text: "Calculated by the dot product: Φ = B · A · cos(θ). In derived units: 1 Tesla-square meter (T·m²) or 1 Volt-second (V·s). I measure how much total magnetic field threads through an area."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Imagine magnetic field lines streaming like water rays through an open circular hula hoop or loop of wire."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Invisible Net (75 pts)",
+        text: "Imagine an invisible net catching a stream of magnetic field lines. I don't measure how tight or dense the lines are—I count the total aggregate quantity of lines piercing through the entire hoop!"
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: According to Faraday's Law, when I change inside a coil of wire, voltage is induced! This is how every hydroelectric dam and power generator creates electricity."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Dams & Dynamos (50 pts)",
+        text: "Whenever I change inside a coil of wire, voltage is born! This single phenomenon in generator dynamos powers every hydroelectric dam, wind turbine, and nuclear power plant on Earth."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after German physicist Wilhelm Weber, who worked closely with Carl Friedrich Gauss on Earth's magnetism and built an early electric telegraph in 1833."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The German Telegrapher (25 pts)",
+        text: "I am named after Wilhelm Eduard Weber, the German physicist who collaborated with Carl Friedrich Gauss on geomagnetism. (In German, my name starts with a 'W' but is pronounced like 'VAY-ber'!)."
       }
     ],
     explanation: "Magnetic Flux measures the total magnetic field passing through an area. Its SI unit is the Weber (Wb = T·m² = V·s), named after Wilhelm Weber."
@@ -247,30 +247,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: G = 1 / R = I / V. I am the exact mathematical reciprocal (opposite) of Electrical Resistance. My unit is 1/ohm (Ω⁻¹)."
+        type: "Math & Reciprocal",
+        badge: "🔢 Clue 1 · The Mathematical Mirror (100 pts)",
+        text: "The exact mathematical twin and reciprocal of Resistance: G = 1 / R = I / V. In base dimensions: 1/ohm (Ω⁻¹). I measure how effortlessly electric current travels through a material."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: If resistance represents a bottleneck or friction slowing down cars, I represent a wide open multi-lane expressway showing how easily electrons flow!"
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Open Superhighway (75 pts)",
+        text: "If electrical resistance is a muddy bottleneck road full of potholes, I am a gleaming 8-lane expressway showing how smoothly and freely electrons can glide through a circuit."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Water purity testers and aquarium TDS meters measure me (in µS/cm) to check dissolved minerals. Historically engineers called me 'mho' (ohm spelled backwards!)."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Pure Water & Backwards Ohms (50 pts)",
+        text: "Aquarium and RO water purity testers measure me (in µS/cm) to detect dissolved mineral ions. In vintage engineering textbooks, my unit was playfully spelled 'mho'—the word 'ohm' written backwards!"
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after Werner von Siemens, the German electrical engineer who built Europe's first electric railway and founded the global engineering company Siemens AG."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Industrial Giant (25 pts)",
+        text: "I honor Werner von Siemens, the legendary 19th-century German electrical pioneer who built Europe's first electric railway and founded the multinational tech titan Siemens AG."
       }
     ],
     explanation: "Conductance is the measure of how easily current flows through a conductor. Its SI unit is the Siemens (S = 1/Ω), named after Werner von Siemens."
@@ -286,30 +286,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Lorentz force F = q(v × B) or B = F / (I·L). In derived SI units: 1 Weber per square meter (Wb/m²) or 1 Newton per Ampere-meter. I measure magnetic field strength."
+        type: "Math & Lorentz",
+        badge: "🔢 Clue 1 · The Force Formula (100 pts)",
+        text: "Defined by the magnetic Lorentz force: F = q(v × B) or B = F / (I·L). In derived units: 1 Weber per square meter (Wb/m²) or 1 Newton per Ampere-meter. I measure localized magnetic strength."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Dark iron filings clustering tightly in sharp, dense curving lines around the poles of a strong bar magnet."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Iron Filings Halo (75 pts)",
+        text: "Sprinkle fine grey iron filings on a sheet of paper over a neodymium magnet, and you will see me in action: dense, sharp curved halos showing the raw grip and focus of the magnetic field."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Earth's geomagnetic field is faint (~50 µT). A fridge magnet is ~5 milli-____. Hospital MRI scanners that produce detailed body scans are 1.5 to 3 of me!"
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Fridge Magnets & MRI Scanners (50 pts)",
+        text: "Earth's natural magnetic shield is ~50 µT. A souvenir fridge magnet is ~5 milli-____. Hospital MRI scanners that peer deep inside the human brain operate at a ferocious 1.5 to 3 of me!"
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after Nikola Tesla, the brilliant Serbian-American inventor of alternating current (AC) motors and the Tesla coil (and namesake of the famous EV car brand!)."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The AC Visionary & Electric Cars (25 pts)",
+        text: "I am named after Nikola Tesla, the eccentric visionary who gave humanity alternating current (AC) power grids, radio control, and wireless coils (and whose surname was borrowed by Elon Musk!)."
       }
     ],
     explanation: "Magnetic Flux Density measures magnetic field strength per unit area. Its SI unit is the Tesla (T = Wb/m²), named after Nikola Tesla."
@@ -325,30 +325,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: L = 10 log₁₀(P / P₀). I am a dimensionless logarithmic unit expressing the ratio of power, voltage, or sound intensity relative to a baseline reference."
+        type: "Math & Logarithms",
+        badge: "🔢 Clue 1 · The Power of Logarithms (100 pts)",
+        text: "I am a dimensionless logarithmic ratio: L = 10 log₁₀(P / P₀). Every +10 jump on my scale means sound or signal power has multiplied by 10x; a +20 jump means 100x more power!"
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: Green, amber, and red VU meter LED bars bouncing in sync with the beat on a DJ music mixing board."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Bouncing VU Meters (75 pts)",
+        text: "Watch green, amber, and flashing red LED VU bars bounce in sync with bass drops on a DJ mixing console. In music recording and telecommunications, I am the ultimate volume ruler."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: A library whisper is ~30 of me, normal human talking is ~60 of me, city traffic is ~85 of me, and a loud rock concert reaches 110 of me (130 is the pain threshold!)."
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · Whispers to Rock Concerts (50 pts)",
+        text: "A quiet library whisper is 30 of me. Normal conversation is 60 of me. City traffic is 85 of me. A deafening rock concert hits 110 of me, and 130 of me marks the threshold of severe human ear pain!"
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Prefixes 'deci-' (one-tenth) onto the 'Bel', named in honor of Alexander Graham Bell, the Scottish-born inventor who patented the telephone in 1876."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · Alexander Graham's Unit (25 pts)",
+        text: "Attach the metric prefix for 'one-tenth' (deci-) to the 'Bel', named in honor of Alexander Graham Bell, the Scottish-Canadian inventor who received the first patent for the telephone in 1876."
       }
     ],
     explanation: "The Decibel (dB) is a logarithmic unit expressing ratios of physical power or sound intensity, named after Alexander Graham Bell."
@@ -364,30 +364,30 @@ const questions = [
       {
         level: 1,
         points: 100,
-        type: "Math & Dimensions",
-        badge: "🔢 Clue 1 · Math & Formula (100 pts)",
-        text: "Formula: Units: s⁻¹ (1/second). Unlike frequency which counts repetitive cycles, I specifically count nuclear decays: exactly 1 atomic nucleus disintegrating per second."
+        type: "Math & Nuclear Decay",
+        badge: "🔢 Clue 1 · The Decay Rate (100 pts)",
+        text: "Dimensionally, I appear as 1/second (s⁻¹). But do not confuse me with wave frequency! I specifically measure spontaneous nuclear disintegrations: exactly 1 atomic nucleus decaying per second."
       },
       {
         level: 2,
         points: 75,
-        type: "Visual & Descriptive",
-        badge: "👁️ Clue 2 · Visual Clue (75 pts)",
-        text: "Visual: A handheld Geiger-Müller counter rapidly clicking as unstable radioactive atoms emit alpha particles, beta electrons, or gamma rays."
+        type: "Visual & Sensory",
+        badge: "👁️ Clue 2 · The Clicking Geiger Counter (75 pts)",
+        text: "Picture a researcher in a hazmat suit holding an ionization wand over rock samples. You hear rapid, erratic 'click-click-click' sounds as unstable atoms eject alpha, beta, or gamma radiation."
       },
       {
         level: 3,
         points: 50,
-        type: "Real-World Everyday",
-        badge: "🌍 Clue 3 · Real-World Example (50 pts)",
-        text: "Real-World: Eating an ordinary banana emits roughly 15 of me due to natural Potassium-40 (⁴⁰K). The average human body naturally produces about 4,500 of me constantly!"
+        type: "Tech & Everyday Life",
+        badge: "🌍 Clue 3 · The Banana Dose (50 pts)",
+        text: "Did you know? Eating a single supermarket banana introduces ~15 of me into your body due to natural Potassium-40! Your own body constantly emits about 4,500 of me every second."
       },
       {
         level: 4,
         points: 25,
-        type: "Scientist & History",
-        badge: "📜 Clue 4 · Scientist & Fun Clue (25 pts)",
-        text: "Scientist: Named after Henri Becquerel, who in 1896 discovered natural radioactivity by accidentally leaving uranium salts in a dark drawer next to photo plates (shared Nobel Prize with Marie Curie)."
+        type: "Dead Giveaway & Pun",
+        badge: "📜 Clue 4 · The Uranium in the Drawer (25 pts)",
+        text: "I honor Henri Becquerel, who in 1896 placed uranium salts in a dark desk drawer next to wrapped photographic plates and serendipitously discovered natural radioactivity (Nobel Prize with Marie Curie)."
       }
     ],
     explanation: "Radioactivity (Activity) is the rate of spontaneous nuclear decay. Its SI unit is the Becquerel (Bq = 1 decay/s), named after Henri Becquerel."
@@ -403,21 +403,21 @@ const reverseDetective = {
       id: "scientist",
       title: "Name the Scientist",
       answer: "Alessandro Volta (1745–1827)",
-      clue: "Italian physicist who invented the Voltaic Pile in 1800 (the world's first true chemical battery made of copper and zinc discs).",
+      clue: "Italian count & physicist who invented the Voltaic Pile in 1800 (the world's first true chemical battery made from stacked zinc and copper discs separated by saltwater pads).",
       points: 50
     },
     {
       id: "quantity",
       title: "Name the Physical Quantity",
       answer: "Electric Potential Difference / Voltage / Electromotive Force (EMF)",
-      clue: "The work needed per unit of charge between two points (1 V = 1 Joule per Coulomb).",
+      clue: "The work needed per unit of charge to move a test charge between two points in an electric field (1 V = 1 Joule per Coulomb).",
       points: 50
     },
     {
       id: "example",
       title: "Provide a Real-World Example",
-      answer: "AA Battery (~1.5 V), USB Port (5 V), Car Battery (12 V), Wall Socket (120 V / 230 V)",
-      clue: "Any everyday household or electronics voltage rating.",
+      answer: "AA / AAA Battery (~1.5 V), USB Port (5 V), Car Battery (12 V), Wall Socket (120 V / 230 V)",
+      clue: "Contestant must cite any accurate real-world voltage rating (e.g., lemon battery ~0.9V, AA battery ~1.5V, smartphone fast charger 9V/20V, overhead transmission lines 400 kV).",
       points: 50
     }
   ],
