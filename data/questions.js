@@ -1,6 +1,6 @@
-// 10 Physical Quantities & SI Units for "Guess the Quantity"
+// 15 Physical Quantities & SI Units for "Guess the Quantity"
 // Clue Order:
-// Clue 1 (100 pts): Simple, direct core concept/function (e.g., "I resist electric current" style)
+// Clue 1 (100 pts): Simple, direct core concept/function (e.g. "I resist electric current" style)
 // Clue 2 (75 pts): The Scientist / Author who it is named after
 // Clue 3 (50 pts): Everyday gadgets, tech, and relatable examples
 // Clue 4 (25 pts): Formula, SI symbol hint, and dead giveaway
@@ -331,7 +331,7 @@ const questions = [
         points: 100,
         type: "Core Function",
         badge: "🎯 Clue 1 · Core Concept (100 pts)",
-        text: "I measure sound volume, loudness, and relative signal power ratios."
+        text: "I measure sound volume, loudness, and relative signal power ratios on a logarithmic scale."
       },
       {
         level: 2,
@@ -395,6 +395,201 @@ const questions = [
       }
     ],
     explanation: "Radioactivity (Activity) is the rate of spontaneous nuclear decay. Its SI unit is the Becquerel (Bq = 1 decay/s), named after Henri Becquerel."
+  },
+  {
+    id: 11,
+    quantity: "Force",
+    unit: "Newton",
+    symbol: "N",
+    dimensionalFormula: "kg·m/s²",
+    aliases: ["newton", "newtons", "n", "force"],
+    clues: [
+      {
+        level: 1,
+        points: 100,
+        type: "Core Function",
+        badge: "🎯 Clue 1 · Core Concept (100 pts)",
+        text: "I measure the physical push, pull, or interaction that causes a mass to accelerate or change its velocity."
+      },
+      {
+        level: 2,
+        points: 75,
+        type: "Scientist / Author",
+        badge: "👨‍🔬 Clue 2 · The Scientist (75 pts)",
+        text: "I honor Sir Isaac Newton, who formulated the 3 classical laws of motion and the universal law of gravitation."
+      },
+      {
+        level: 3,
+        points: 50,
+        type: "Tech & Everyday",
+        badge: "📱 Clue 3 · Everyday Tech (50 pts)",
+        text: "The downward gravitational weight of an average apple resting in your open hand on Earth is almost exactly 1 of me."
+      },
+      {
+        level: 4,
+        points: 25,
+        type: "Formula & Giveaway",
+        badge: "⚡ Clue 4 · Formula & Symbol (25 pts)",
+        text: "Formula: F = m · a (Mass × Acceleration). Base SI unit: kg·m/s². Symbol: N. ('May the ____ be with you!')."
+      }
+    ],
+    explanation: "Force causes mass to accelerate. Its SI unit is the Newton (N = kg·m/s²), named after Sir Isaac Newton."
+  },
+  {
+    id: 12,
+    quantity: "Pressure / Mechanical Stress",
+    unit: "Pascal",
+    symbol: "Pa",
+    dimensionalFormula: "N/m² or kg/(m·s²)",
+    aliases: ["pascal", "pascals", "pa", "pressure", "stress"],
+    clues: [
+      {
+        level: 1,
+        points: 100,
+        type: "Core Function",
+        badge: "🎯 Clue 1 · Core Concept (100 pts)",
+        text: "I measure perpendicular mechanical force applied uniformly over a given surface area."
+      },
+      {
+        level: 2,
+        points: 75,
+        type: "Scientist / Author",
+        badge: "👨‍🔬 Clue 2 · The Scientist (75 pts)",
+        text: "I am named after French polymath Blaise Pascal, who investigated fluid hydrodynamics and built an early mechanical calculator."
+      },
+      {
+        level: 3,
+        points: 50,
+        type: "Tech & Everyday",
+        badge: "📱 Clue 3 · Everyday Tech (50 pts)",
+        text: "A single currency banknote lying flat on a table exerts about 1 of me. Standard atmospheric pressure at sea level is approximately 101,325 of me."
+      },
+      {
+        level: 4,
+        points: 25,
+        type: "Formula & Giveaway",
+        badge: "⚡ Clue 4 · Formula & Symbol (25 pts)",
+        text: "Formula: P = F / A (Force per unit area). In SI units: 1 Newton per square meter (N/m²). Car tires are pumped to ~220 kPa. Symbol: Pa."
+      }
+    ],
+    explanation: "Pressure is force per unit area. Its SI unit is the Pascal (Pa = N/m²), named after Blaise Pascal."
+  },
+  {
+    id: 13,
+    quantity: "Power",
+    unit: "Watt",
+    symbol: "W",
+    dimensionalFormula: "J/s or kg·m²/s³",
+    aliases: ["watt", "watts", "w", "power"],
+    clues: [
+      {
+        level: 1,
+        points: 100,
+        type: "Core Function",
+        badge: "🎯 Clue 1 · Core Concept (100 pts)",
+        text: "I measure the time rate at which energy is consumed, converted, or work is performed."
+      },
+      {
+        level: 2,
+        points: 75,
+        type: "Scientist / Author",
+        badge: "👨‍🔬 Clue 2 · The Scientist (75 pts)",
+        text: "I am named after Scottish engineer James Watt, whose steam engine condenser improvements accelerated the Industrial Revolution."
+      },
+      {
+        level: 3,
+        points: 50,
+        type: "Tech & Everyday",
+        badge: "📱 Clue 3 · Everyday Tech (50 pts)",
+        text: "A phone fast-charger delivers 65 of me, a microwave oven uses 1,000 of me, and 746 of me equals exactly one 'horsepower'."
+      },
+      {
+        level: 4,
+        points: 25,
+        type: "Formula & Giveaway",
+        badge: "⚡ Clue 4 · Formula & Symbol (25 pts)",
+        text: "Formula: P = Energy / Time = Voltage × Current (P = V · I). In SI units: Joule per second (J/s). Symbol: W. (Doc Brown: '1.21 Giga-____?!')."
+      }
+    ],
+    explanation: "Power is the rate of doing work or transferring energy. Its SI unit is the Watt (W = J/s), named after James Watt."
+  },
+  {
+    id: 14,
+    quantity: "Electrical Resistance",
+    unit: "Ohm",
+    symbol: "Ω",
+    dimensionalFormula: "V/A or kg·m²/(s³·A²)",
+    aliases: ["ohm", "ohms", "resistance", "resistor"],
+    clues: [
+      {
+        level: 1,
+        points: 100,
+        type: "Core Function",
+        badge: "🎯 Clue 1 · Core Concept (100 pts)",
+        text: "I measure how strongly an electrical component or material opposes and restricts the flow of electric current through it."
+      },
+      {
+        level: 2,
+        points: 75,
+        type: "Scientist / Author",
+        badge: "👨‍🔬 Clue 2 · The Scientist (75 pts)",
+        text: "I am named after German physicist Georg Simon Ohm, who formulated the cornerstone law of electricity: V = I · R."
+      },
+      {
+        level: 3,
+        points: 50,
+        type: "Tech & Everyday",
+        badge: "📱 Clue 3 · Everyday Tech (50 pts)",
+        text: "Dry human skin has a high rating of ~100,000 of me, while copper wire has almost 0. Heating coils in electric geysers heat up when current pushes through me."
+      },
+      {
+        level: 4,
+        points: 25,
+        type: "Formula & Giveaway",
+        badge: "⚡ Clue 4 · Formula & Symbol (25 pts)",
+        text: "Formula: R = V / I (Volts per Ampere). Symbol: Ω (the Greek letter Omega). I am the classic electrical unit of resistance!"
+      }
+    ],
+    explanation: "Resistance opposes the flow of electric current. Its SI unit is the Ohm (Ω = V/A), named after Georg Simon Ohm."
+  },
+  {
+    id: 15,
+    quantity: "Thermodynamic Temperature",
+    unit: "Kelvin",
+    symbol: "K",
+    dimensionalFormula: "Base SI Unit (Θ)",
+    aliases: ["kelvin", "kelvins", "k", "temperature", "absolute temperature"],
+    clues: [
+      {
+        level: 1,
+        points: 100,
+        type: "Core Function",
+        badge: "🎯 Clue 1 · Core Concept (100 pts)",
+        text: "I measure the absolute thermodynamic thermal energy and average kinetic motion of particles in matter."
+      },
+      {
+        level: 2,
+        points: 75,
+        type: "Scientist / Author",
+        badge: "👨‍🔬 Clue 2 · The Scientist (75 pts)",
+        text: "I honor British physicist William Thomson, 1st Baron Kelvin, who calculated the concept of the absolute zero temperature scale."
+      },
+      {
+        level: 3,
+        points: 50,
+        type: "Tech & Everyday",
+        badge: "📱 Clue 3 · Everyday Tech (50 pts)",
+        text: "At 0 of me (Absolute Zero), all atomic motion virtually stops. Smartphone cameras adjust 'White Balance' using me (e.g. 5,500 for daylight)."
+      },
+      {
+        level: 4,
+        points: 25,
+        type: "Formula & Giveaway",
+        badge: "⚡ Clue 4 · Formula & Symbol (25 pts)",
+        text: "Conversion: K = °C + 273.15. Unlike Celsius and Fahrenheit, I am an absolute scale that NEVER uses a degree symbol (°)! Symbol: K."
+      }
+    ],
+    explanation: "Thermodynamic Temperature measures average thermal kinetic energy. Its base SI unit is the Kelvin (K), named after Lord Kelvin."
   }
 ];
 

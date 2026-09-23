@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guess the Quantity · Live SI Trivia</title>
+  <title>Guess the Quantity · Live SI Trivia (15 Questions · 15 Mins)</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
 </head>
 <body class="p-3 sm:p-6 bg-[#070d1e] text-slate-100 min-h-screen font-sans">
@@ -13,7 +13,7 @@
     <header class="flex items-center justify-between border-b border-slate-800 pb-3">
       <div>
         <h1 class="text-xl font-bold text-amber-400">⚡ Guess the Quantity</h1>
-        <p class="text-xs text-slate-400">SI Unit College Trivia</p>
+        <p class="text-xs text-slate-400">SI Unit Trivia · 15 Questions · 15-Min Timer</p>
       </div>
       <div class="flex gap-1 text-xs font-semibold bg-slate-900 p-1 rounded-lg border border-slate-800">
         <button id="btn-tab-play" onclick="switchTab('play')" class="px-3 py-1 rounded bg-amber-500 text-slate-950 font-bold">Play</button>
@@ -28,22 +28,38 @@
       
       <!-- Registration -->
       <div id="box-join" class="bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-3">
-        <h2 class="text-xl font-bold text-white">Join Trivia Game</h2>
-        <p class="text-xs text-slate-300">10 rounds. Clue 1 starts automatically (100 pts). Reveal clues if needed!</p>
+        <span class="inline-block px-3 py-1 text-xs font-bold uppercase tracking-wider bg-amber-500/10 text-amber-400 border border-amber-500/20 rounded-full">
+          ⏱️ 15 Questions · 15-Minute Speed Challenge
+        </span>
+        <h2 class="text-xl font-bold text-white">Can You Guess All 15 SI Units?</h2>
+        <p class="text-xs text-slate-300">You have 15 minutes to answer 15 progressive rounds. Type unit name, symbol, or quantity!</p>
         <form onsubmit="startGame(event)" class="flex gap-2 max-w-sm mx-auto pt-2">
-          <input id="in-name" type="text" placeholder="Enter your name / team..." required class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
-          <button type="submit" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm hover:bg-amber-400">Begin</button>
+          <input id="in-name" type="text" placeholder="Enter your name / team handle..." required class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-amber-400">
+          <button type="submit" class="bg-amber-500 text-slate-950 font-bold px-4 py-2 rounded-lg text-sm hover:bg-amber-400">Begin Game →</button>
         </form>
       </div>
 
       <!-- Game Round -->
       <div id="box-game" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-4">
         
-        <!-- Status Bar -->
-        <div class="flex justify-between items-center bg-slate-950 px-4 py-2 rounded-lg text-xs font-mono border border-slate-800">
-          <span>Round <strong id="lbl-round" class="text-white text-sm">1</strong>/10</span>
-          <span>At Stake: <strong id="lbl-stake" class="text-amber-400 text-sm">100 pts</strong></span>
-          <span>Score: <strong id="lbl-score" class="text-rose-400 text-sm">0 pts</strong></span>
+        <!-- Status Bar with 15-Minute Countdown Timer -->
+        <div class="grid grid-cols-4 gap-2 text-center bg-slate-950 p-2.5 rounded-lg text-xs font-mono border border-slate-800">
+          <div>
+            <span class="block text-[10px] text-slate-400 uppercase">Round</span>
+            <span><strong id="lbl-round" class="text-white text-sm">1</strong>/15</span>
+          </div>
+          <div>
+            <span class="block text-[10px] text-slate-400 uppercase">Time Left</span>
+            <span id="lbl-timer" class="text-sm font-bold text-emerald-400">15:00</span>
+          </div>
+          <div>
+            <span class="block text-[10px] text-slate-400 uppercase">At Stake</span>
+            <strong id="lbl-stake" class="text-amber-400 text-sm">100 pts</strong>
+          </div>
+          <div>
+            <span class="block text-[10px] text-slate-400 uppercase">Score</span>
+            <strong id="lbl-score" class="text-rose-400 text-sm">0 pts</strong>
+          </div>
         </div>
 
         <!-- Clues Container -->
@@ -87,7 +103,7 @@
       <!-- Summary -->
       <div id="box-summary" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-6 text-center space-y-4">
         <div class="text-4xl">🏆</div>
-        <h2 class="text-xl font-bold text-white">Quiz Completed!</h2>
+        <h2 id="sum-title" class="text-xl font-bold text-white">Quiz Completed!</h2>
         <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto text-xs">
           <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <span class="block text-slate-400">Score</span>
@@ -95,10 +111,10 @@
           </div>
           <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
             <span class="block text-slate-400">Correct</span>
-            <strong id="sum-correct" class="text-base text-rose-400 font-mono">0/10</strong>
+            <strong id="sum-correct" class="text-base text-rose-400 font-mono">0/15</strong>
           </div>
           <div class="bg-slate-950 p-2.5 rounded-lg border border-slate-800">
-            <span class="block text-slate-400">Time</span>
+            <span class="block text-slate-400">Time Taken</span>
             <strong id="sum-time" class="text-base text-white font-mono">0s</strong>
           </div>
         </div>
@@ -130,12 +146,13 @@
 
     <!-- TAB 3: RULES -->
     <section id="pane-rules" class="hidden bg-slate-900 border border-slate-800 rounded-xl p-5 space-y-3 text-xs leading-relaxed">
-      <h2 class="text-lg font-bold text-white">How to Play</h2>
-      <ul class="space-y-1 text-slate-300">
-        <li>• <strong>Clue 1 (100 pts):</strong> Core concept or function (e.g. "I resist current" style).</li>
-        <li>• <strong>Clue 2 (75 pts):</strong> The Scientist / Author who it is named after.</li>
+      <h2 class="text-lg font-bold text-white">How to Play (15 Questions · 15 Minutes)</h2>
+      <ul class="space-y-1.5 text-slate-300">
+        <li>• <strong>15 Minutes Total:</strong> A 15-minute countdown starts when you begin. Answer as many as you can before the clock expires!</li>
+        <li>• <strong>Clue 1 (100 pts):</strong> Core function or concept (e.g. "I resist current" style).</li>
+        <li>• <strong>Clue 2 (75 pts):</strong> The Scientist / Author who discovered it or who it is named after.</li>
         <li>• <strong>Clue 3 (50 pts):</strong> Everyday tech & gadgets.</li>
-        <li>• <strong>Clue 4 (25 pts):</strong> Formula, symbol hint, & dead giveaway.</li>
+        <li>• <strong>Clue 4 (25 pts):</strong> Formula, symbol hint, & giveaway.</li>
         <li>• Type either the <strong>unit name</strong> (e.g. <em>Hertz</em>), the <strong>symbol</strong> (<em>Hz</em>), or the <strong>quantity</strong> (<em>Frequency</em>).</li>
       </ul>
     </section>
@@ -170,7 +187,7 @@
   </div>
 
   <script>
-    // --- 10 SI UNITS WITH CLUE 1 AS CORE FUNCTION & CLUE 2 AS SCIENTIST ---
+    // --- 15 SI UNITS (CLUE 1: CORE FUNCTION, CLUE 2: SCIENTIST) ---
     const QUESTIONS = [
       {
         quantity: "Frequency",
@@ -301,20 +318,87 @@
           { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Listen to a Geiger counter clicking rapidly. Exactly 1 nuclear decay per second (s⁻¹). Symbol: Bq." }
         ],
         exp: "Radioactivity measures decay rate of unstable atoms. SI unit: Becquerel (Bq = 1 decay/s)."
+      },
+      {
+        quantity: "Force",
+        unit: "Newton",
+        symbol: "N",
+        aliases: ["newton", "newtons", "n", "force"],
+        clues: [
+          { pts: 100, label: "🎯 Clue 1 · Core Function (100 pts)", text: "I measure the physical push, pull, or interaction that causes a mass to accelerate or change velocity." },
+          { pts: 75, label: "👨‍🔬 Clue 2 · The Scientist (75 pts)", text: "I honor Sir Isaac Newton, who formulated the 3 classical laws of motion and universal gravitation." },
+          { pts: 50, label: "📱 Clue 3 · Everyday Tech (50 pts)", text: "The downward gravitational weight of a medium-sized apple resting on your palm is almost exactly 1 of me." },
+          { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Formula: F = m · a (Mass × Acceleration). Base SI unit: kg·m/s². Symbol: N. ('May the ____ be with you!')." }
+        ],
+        exp: "Force causes mass to accelerate. SI unit: Newton (N = kg·m/s²)."
+      },
+      {
+        quantity: "Pressure / Mechanical Stress",
+        unit: "Pascal",
+        symbol: "Pa",
+        aliases: ["pascal", "pascals", "pa", "pressure", "stress"],
+        clues: [
+          { pts: 100, label: "🎯 Clue 1 · Core Function (100 pts)", text: "I measure perpendicular mechanical force applied uniformly over a given surface area." },
+          { pts: 75, label: "👨‍🔬 Clue 2 · The Scientist (75 pts)", text: "I am named after French polymath Blaise Pascal, who investigated fluid hydrodynamics and calculators." },
+          { pts: 50, label: "📱 Clue 3 · Everyday Tech (50 pts)", text: "A single currency note lying flat on a table exerts about 1 of me. Standard atmospheric pressure is 101,325 of me." },
+          { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Formula: P = F / A (Force per unit area). In SI units: 1 Newton per square meter (N/m²). Car tires are ~220 kPa. Symbol: Pa." }
+        ],
+        exp: "Pressure is force per unit area. SI unit: Pascal (Pa = N/m²)."
+      },
+      {
+        quantity: "Power",
+        unit: "Watt",
+        symbol: "W",
+        aliases: ["watt", "watts", "w", "power"],
+        clues: [
+          { pts: 100, label: "🎯 Clue 1 · Core Function (100 pts)", text: "I measure the time rate at which energy is consumed, converted, or work is performed." },
+          { pts: 75, label: "👨‍🔬 Clue 2 · The Scientist (75 pts)", text: "I am named after Scottish engineer James Watt, whose steam engine condenser powered the Industrial Revolution." },
+          { pts: 50, label: "📱 Clue 3 · Everyday Tech (50 pts)", text: "A fast-charger delivers 65 of me, a microwave uses 1,000 of me, and 746 of me equals exactly one 'horsepower'." },
+          { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Formula: P = Energy / Time = Voltage × Current (P = V · I). In SI units: Joule/second (J/s). Symbol: W. ('1.21 Giga-____?!')." }
+        ],
+        exp: "Power is the rate of energy consumption. SI unit: Watt (W = J/s)."
+      },
+      {
+        quantity: "Electrical Resistance",
+        unit: "Ohm",
+        symbol: "Ω",
+        aliases: ["ohm", "ohms", "resistance", "resistor"],
+        clues: [
+          { pts: 100, label: "🎯 Clue 1 · Core Function (100 pts)", text: "I measure how strongly an electrical component or material opposes and restricts the flow of electric current through it." },
+          { pts: 75, label: "👨‍🔬 Clue 2 · The Scientist (75 pts)", text: "I am named after German physicist Georg Simon Ohm, who formulated the cornerstone law: V = I · R." },
+          { pts: 50, label: "📱 Clue 3 · Everyday Tech (50 pts)", text: "Dry human skin has a high rating of ~100,000 of me, while copper wire has almost 0. Electric geysers heat up when current pushes through me." },
+          { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Formula: R = V / I (Volts per Ampere). Symbol: Ω (the Greek letter Omega). I am the classic electrical unit of resistance!" }
+        ],
+        exp: "Resistance opposes electric current. SI unit: Ohm (Ω = V/A)."
+      },
+      {
+        quantity: "Thermodynamic Temperature",
+        unit: "Kelvin",
+        symbol: "K",
+        aliases: ["kelvin", "kelvins", "k", "temperature", "absolute temperature"],
+        clues: [
+          { pts: 100, label: "🎯 Clue 1 · Core Function (100 pts)", text: "I measure absolute thermodynamic thermal energy and the average kinetic motion of particles in matter." },
+          { pts: 75, label: "👨‍🔬 Clue 2 · The Scientist (75 pts)", text: "I honor British physicist William Thomson, 1st Baron Kelvin, who established the absolute zero temperature scale." },
+          { pts: 50, label: "📱 Clue 3 · Everyday Tech (50 pts)", text: "At 0 of me (Absolute Zero), all atomic motion virtually freezes. Phone cameras adjust 'Color Temperature' using me (e.g. 5,500 K)." },
+          { pts: 25, label: "⚡ Clue 4 · Formula & Symbol (25 pts)", text: "Conversion: K = °C + 273.15. Unlike Celsius and Fahrenheit, I am an absolute scale that NEVER uses a degree symbol (°)! Symbol: K." }
+        ],
+        exp: "Thermodynamic Temperature measures kinetic thermal energy. Base SI unit: Kelvin (K)."
       }
     ];
 
-    // --- GAME ENGINE ---
+    // --- GAME ENGINE & 15-MINUTE COUNTDOWN TIMER ---
     let currentIdx = 0;
     let cluesShown = 1;
     let score = 0;
     let correctCount = 0;
     let startTime = null;
     let playerName = "Player";
+    let timerInterval = null;
+    let timeLeftSeconds = 15 * 60; // 15 minutes = 900 seconds
     let leaderboard = [
-      { name: "QuantumLeap", score: 875, time: 74 },
-      { name: "Sarah M.", score: 800, time: 65 },
-      { name: "Alex R.", score: 725, time: 82 }
+      { name: "QuantumLeap", score: 1275, time: 640 },
+      { name: "Sarah M.", score: 1150, time: 590 },
+      { name: "Alex R.", score: 950, time: 710 }
     ];
 
     function switchTab(t) {
@@ -333,6 +417,41 @@
       }
     }
 
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = sec % 60;
+      return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeftSeconds = 15 * 60;
+      updateTimerDisplay();
+
+      timerInterval = setInterval(() => {
+        timeLeftSeconds--;
+        updateTimerDisplay();
+
+        if (timeLeftSeconds <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById('sum-title').textContent = "⏰ Time's Up! (15 Minutes Expired)";
+          finishQuiz();
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const timerEl = document.getElementById('lbl-timer');
+      timerEl.textContent = formatTime(timeLeftSeconds);
+      if (timeLeftSeconds <= 120) {
+        timerEl.className = "text-sm font-bold text-rose-400 animate-pulse";
+      } else if (timeLeftSeconds <= 300) {
+        timerEl.className = "text-sm font-bold text-amber-400";
+      } else {
+        timerEl.className = "text-sm font-bold text-emerald-400";
+      }
+    }
+
     function startGame(e) {
       e.preventDefault();
       playerName = document.getElementById('in-name').value.trim() || 'Player';
@@ -345,12 +464,13 @@
       document.getElementById('box-summary').classList.add('hidden');
       document.getElementById('box-game').classList.remove('hidden');
 
+      startTimer();
       loadRound(0);
     }
 
     function loadRound(idx) {
       currentIdx = idx;
-      cluesShown = 1; // Clue 1 starts automatically!
+      cluesShown = 1;
       document.getElementById('lbl-round').textContent = idx + 1;
       document.getElementById('lbl-stake').textContent = "100 pts";
       document.getElementById('lbl-score').textContent = `${score} pts`;
@@ -463,19 +583,22 @@
         if (currentIdx < QUESTIONS.length - 1) {
           loadRound(currentIdx + 1);
         } else {
+          clearInterval(timerInterval);
+          document.getElementById('sum-title').textContent = "Quiz Completed! 🏆";
           finishQuiz();
         }
       }, 1500);
     }
 
     function finishQuiz() {
+      clearInterval(timerInterval);
       const timeSec = Math.round((Date.now() - startTime) / 1000);
       document.getElementById('box-game').classList.add('hidden');
       document.getElementById('box-summary').classList.remove('hidden');
 
       document.getElementById('sum-score').textContent = score;
-      document.getElementById('sum-correct').textContent = `${correctCount}/10`;
-      document.getElementById('sum-time').textContent = `${timeSec}s`;
+      document.getElementById('sum-correct').textContent = `${correctCount}/15`;
+      document.getElementById('sum-time').textContent = `${timeSec}s (${formatTime(timeSec)})`;
 
       leaderboard.push({ name: playerName, score, time: timeSec });
       leaderboard.sort((a, b) => b.score !== a.score ? b.score - a.score : a.time - b.time);
@@ -494,6 +617,7 @@
       score = 0;
       correctCount = 0;
       startTime = Date.now();
+      startTimer();
       loadRound(0);
     }
 
